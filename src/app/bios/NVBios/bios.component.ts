@@ -42,12 +42,13 @@ export class BiosComponent {
 
   Bios = Bios
   BiosConfig = BiosConfig;
-  BiosPage: number = 0;
-  BiosPages: string[] = [];
 
-  selected_item: number = 0;
-  editing_item: number | null = null;
-  animation: BiosSectionAnimation | null = null;
+  declare BiosPage: number;
+  declare BiosPages: string[];
+  declare selected_item: number;
+  declare editing_item: number | null;
+  declare modal_item: string | number;
+  declare animation: BiosSectionAnimation | null;
 
   public moveTo(page: number) {
     if (this.editing_item != null) return;
@@ -81,10 +82,29 @@ export class BiosComponent {
     }
   }
 
+  public navigateTo() {
+    this.router.navigateByUrl('/');
+  }
 
+  ngOnDestroy(): void {
+    this.BiosPage = 0;
+    this.BiosPages = [];
+    this.selected_item = 0;
+    this.editing_item = null;
+    this.modal_item = 0;
+    this.animation = null;
+  }
 
   ngOnInit(): void {
 
+    this.BiosPage = 0;
+    this.BiosPages = [];
+    this.selected_item = 0;
+    this.editing_item = null;
+    this.modal_item = 0;
+    this.animation = null;
+
+    
     setInterval(() => {
       this.Bios = Bios
     }, 1000)
@@ -96,17 +116,32 @@ export class BiosComponent {
     window.addEventListener("keydown", (e) => {
       let lastItem: number = this.selected_item;
       let newItem: number = this.selected_item;
+      if (this.router.url != "/bios") return;
       switch(e.key) {
         case "ArrowUp":
-          while (Bios.BiosOptions[this.BiosPage].items[newItem - 1] && lastItem == this.selected_item) {
-            newItem -= 1;
-            this.selectItem(newItem);
+          if (this.editing_item == null) {
+            while (Bios.BiosOptions[this.BiosPage].items[newItem - 1] && lastItem == this.selected_item) {
+              newItem -= 1;
+              this.selectItem(newItem);
+            }
+          }else{
+            let item = this.modal_item;
+            if (Bios.BiosOptions[this.BiosPage].items[this.editing_item].data.values?.[item as number - 1]) {
+              this.modal_item = item as number - 1;
+            }
           }
           break;
         case "ArrowDown":
-          while (Bios.BiosOptions[this.BiosPage].items[newItem + 1] && lastItem == this.selected_item) {
-            newItem += 1;
-            this.selectItem(newItem);
+          if (this.editing_item == null) {
+            while (Bios.BiosOptions[this.BiosPage].items[newItem + 1] && lastItem == this.selected_item) {
+              newItem += 1;
+              this.selectItem(newItem);
+            }
+          }else {
+            let item = this.modal_item;
+            if (Bios.BiosOptions[this.BiosPage].items[this.editing_item].data.values?.[item as number + 1]) {
+              this.modal_item = item as number + 1;
+            }
           }
           break;
         case "ArrowLeft":
@@ -117,10 +152,29 @@ export class BiosComponent {
           break;
         case "Enter":
           let item = Bios.BiosOptions[this.BiosPage].items[this.selected_item];
-          switch(item.type) {
-            case "select":
-              this.editing_item = this.selected_item;
-              break;
+          if (this.editing_item == null) {
+            switch(item.type) {
+              case "select":
+                this.editing_item = this.selected_item;
+                this.modal_item = item.data?.selected?.[0] as string | number;
+                break;
+              case "execute":
+                Bios.BiosOptions[this.BiosPage].items[this.selected_item].execute?.forEach(func => {
+                  console.log(func());
+                  console.log(func)
+                });
+                if (Bios.BiosOptions[this.BiosPage].items[this.selected_item].exit == true) {
+                  this.router.navigate(['/']);
+                }
+                break;
+              default:
+                console.error("Enter event is missing.");
+                break;
+            }
+          }else{
+            item.data.selected = [this.modal_item as number];
+            Bios.data[item.data?.data as string] = this.modal_item as string;
+            this.editing_item = null;
           }
           break;
         case "Escape":

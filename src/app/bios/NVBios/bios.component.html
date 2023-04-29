@@ -45,5 +45,5 @@
     </div>
 </div>
 <div class="modal" *ngIf="editing_item != null && Bios.BiosOptions[BiosPage].items[editing_item].type == 'select'">
-    <div *ngFor="let item of Bios.BiosOptions[BiosPage].items[editing_item].data?.values">{{ item }}</div>
+    <div *ngFor="let item of Bios.BiosOptions[BiosPage].items[editing_item].data?.values;index as index" [ngClass]="{active: index == modal_item}">{{ item }}</div>
 </div>

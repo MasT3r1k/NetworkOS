@@ -46,21 +46,13 @@
 }
 
 
-
-.modal .modal-header {
-    color: #fff;
-    font-size: 28px;
-    font-weight: 700;
+.modal > div {
+    width: 100%;
+    padding: 1rem;
 }
 
-.modal .modal-actions button {
-    border: 1px solid #323232;
-    background-color: #222;
-    color: #fff;
-    margin: 0 8px;
-    border-radius: 16px;
-    padding: 6px 16px;
-    cursor: pointer;
+.modal > div.active {
+    color: #2999ed;
 }
 
 .navbar {

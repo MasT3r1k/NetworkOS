@@ -8,6 +8,7 @@ type BiosItemType = 'select' | 'input' | 'info' | 'empty' | 'execute';
 interface BiosItemSelect {
     selected?: string[] | number[];
     seperator?: string;
+    data?: string;
     values: string[];
     dynamicValues?: Function[];
     options?: {
@@ -24,7 +25,8 @@ interface BiosItem {
     description?: string;
     readonly?: boolean;
     dynamic?: boolean;
-    execute?: Function;
+    execute?: Function[];
+    exit?: boolean;
     data: BiosItemSelect;
 }
 interface BiosOptions {
@@ -40,7 +42,6 @@ interface BiosTime {
 type BiosUserPlatform = 'Administrator' | 'User';
 
 interface BiosSecurity {
-    SecureBoot: number;
     AdministratorPassword: string;
     SataPassword: string[];
     UserPassword: string;
@@ -55,9 +56,9 @@ export namespace Bios {
         Offset: Calendar.offset
     };
     
-    let data = {
+    export let default_config = {
         lgn: 1,                 // Language
-        tof: Calendar.offset,   // Time offset
+        tof: 0,                 // Time offset
         nb: 0,                  // Network boot
         wl: 0,                  // Wireless LAN
         gh: 0,                  // Graphic Device
@@ -75,16 +76,28 @@ export namespace Bios {
         spwd: []                // Sata password
     }
 
+    export let data = JSON.parse(localStorage.getItem('bios-options') as string) || default_config;
+
     export let Security: BiosSecurity = {
-        SecureBoot: data.sb,
-        AdministratorPassword: '',
-        SataPassword: [],
-        UserPassword: '',
+        AdministratorPassword: data.apwd,
+        SataPassword: data.spwd,
+        UserPassword: data.upwd,
         UserPlatform: (data.pm) ? 'User' : 'Administrator'
     };
 
+    export function resetBios() {
+        data = Bios.default_config;
+    }
+    
+    export function restoreBios() {
+        data = JSON.parse(localStorage.getItem('bios-options') as string) || Bios.default_config;
+    }
+    
+    export function saveBios() {
+        localStorage.setItem("bios-options", JSON.stringify(data));
+        return localStorage.getItem("bios-options");
+    }
 
-    localStorage.setItem("bios-options", JSON.stringify(data));
 
     export let BiosOptions: BiosOptions[] = [
         {
@@ -96,6 +109,7 @@ export namespace Bios {
                 type: 'select',
                 description: 'Choose the default language',
                 data: {
+                    data: 'lgn',
                     selected: [data.lgn],
                     values: ['Czech', 'English']
                 }
@@ -154,6 +168,7 @@ export namespace Bios {
                 type: 'select',
                 description: 'Enable/Disable PXE Boot on to LAN',
                 data: {
+                    data: 'nb',
                     selected: [data.nb],
                     values: ['Enabled', 'Disabled']
                 }
@@ -162,6 +177,7 @@ export namespace Bios {
                 type: 'select',
                 description: 'Enable/Disable wireless LAN device',
                 data: {
+                    data: 'wl',
                     selected: [data.wl],
                     values: ['Enabled', 'Disabled']
                 }
@@ -170,6 +186,7 @@ export namespace Bios {
                 type: 'select',
                 description: 'Select graphic device<br><b>[Discrete]</b> - Enable the integrated and discrete graphic controller.<br><b>[UMA Only]</b> - Enable integrated graphic controller only.',
                 data: {
+                    data: 'gh',
                     selected: [data.gh],
                     values: ['Discrete', 'UMA Only']
                 }
@@ -178,6 +195,7 @@ export namespace Bios {
                 type: 'select',
                 description: 'Enable/Disable Integrated LAN to wake the system',
                 data: {
+                    data: 'wol',
                     selected: [data.wol],
                     values: ['Enabled', 'Disabled']
                 }
@@ -186,6 +204,7 @@ export namespace Bios {
                 type: 'select',
                 description: 'Allow BIOS to be back levelled to a previous version',
                 data: {
+                    data: 'bbf',
                     selected: [data.bbf],
                     values: ['Enabled', 'Disabled']
                 }
@@ -233,6 +252,7 @@ export namespace Bios {
                 type: 'select',
                 description: 'This is AMD virtualization function switch',
                 data: {
+                    data: 'svm',
                     selected: [data.svm],
                     values: ['Enabled', 'Disabled']
                 }
@@ -241,6 +261,7 @@ export namespace Bios {
                 type: 'select',
                 description: 'This is AMD virtualization function switch',
                 data: {
+                    data: 'iommu',
                     selected: [data.iommu],
                     values: ['Enabled', 'Disabled']
                 }
@@ -293,6 +314,7 @@ export namespace Bios {
                 type: 'select',
                 description: 'Set System Boot Mode<br><b>[UEFI]</b> - For OS need pure UEFI<br><b>[Legacy]</b> - For OS need legacy support',
                 data: {
+                    data: 'bm',
                     selected: [data.bm],
                     values: ['UEFI', 'Legacy']
                 }
@@ -301,6 +323,7 @@ export namespace Bios {
                 type: 'select',
                 description: 'Enable/Disable Fast Boot',
                 data: {
+                    data: 'fb',
                     selected: [data.fb],
                     values: ['Enabled', 'Disabled']
                 }
@@ -309,7 +332,8 @@ export namespace Bios {
                 type: 'select',
                 description: 'Enable/Disable Secure Boot',
                 data: {
-                    selected: [Security.SecureBoot],
+                    data: 'sb',
+                    selected: [data.sb],
                     values: ['Enabled', 'Disabled']
                 }
             }, {
@@ -317,6 +341,7 @@ export namespace Bios {
                 type: 'info',
                 readonly: true,
                 data: {
+                    data: 'pm',
                     selected: [data.pm],
                     values: [(Bios.Security.UserPlatform == "User") ? 'User Mode' : 'Admin Mode']
                 }
@@ -325,6 +350,7 @@ export namespace Bios {
                 type: 'select',
                 description: 'Set boot priority',
                 data: {
+                    data: 'bpo',
                     selected: [data.bpo],
                     values: ['1. IBM 1405', '2. Samsung 860 EVO M.2 (NVOS)']
                 }
@@ -356,6 +382,7 @@ export namespace Bios {
                 text: 'Load Optimized Defaults',
                 type: 'execute',
                 description: 'Restores/loads the default values for all the setup options',
+                execute: [resetBios],
                 data: {
                     selected: [0],
                     values: []
@@ -364,6 +391,8 @@ export namespace Bios {
                 text: 'Save Changes & Exit',
                 type: 'execute',
                 description: 'Exit BIOS and save your changes to CMOS',
+                execute: [saveBios],
+                exit: true,
                 data: {
                     selected: [0],
                     values: []
@@ -372,6 +401,7 @@ export namespace Bios {
                 text: 'Discard Changes & Exit',
                 type: 'execute',
                 description: 'Exit BIOS without saving any changes',
+                exit: true,
                 data: {
                     selected: [0],
                     values: []
@@ -388,6 +418,7 @@ export namespace Bios {
                 text: 'Save Changes',
                 type: 'execute',
                 description: 'Save your changes to CMOS',
+                execute: [saveBios],
                 data: {
                     selected: [0],
                     values: []
@@ -396,6 +427,7 @@ export namespace Bios {
                 text: 'Discard Changes',
                 type: 'execute',
                 description: 'Restore changes to previous version',
+                execute: [restoreBios],
                 data: {
                     selected: [0],
                     values: []
