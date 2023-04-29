@@ -1,0 +1,4 @@
+<div class="screen">
+    <p *ngIf="keys['accessBios'].length !== 0">Please press {{ formatKeys(keys['accessBios']) }} to enter Bios settings</p>
+    <p *ngIf="keys['accessBios'].length == 0">Zkratky pro přístup do biosu nebyly nastaveny. 🙁</p>
+</div>

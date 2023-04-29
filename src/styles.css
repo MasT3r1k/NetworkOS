@@ -1,1 +1,40 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Livvic:wght@100;200;300;400;500;600;700;900&display=swap');
+
+*, *::after, *::before {
+    box-sizing: border-box;
+}
+
+body
+{
+    margin: 0;
+    padding: 0;
+    font-family: 'Livvic', sans-serif;
+    --red-color: linear-gradient(90deg, hsl(0, 98%, 55%) 0%, hsl(353, 95%, 31%) 100%);
+    --red-color-hover: linear-gradient(90deg, hsl(0, 95%, 40%) 0%, hsl(353, 95%, 25%) 100%);
+    max-width: 100vw;
+    overflow: hidden;
+
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.row
+{
+    display: flex;
+    flex-direction: row;
+    position: relative;
+}
+
+application-settings {
+    width: 100%;
+    display: flex;
+}
+
+.screen {
+    height: 100vh;
+    width: 100vw;
+}

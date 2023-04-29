@@ -1,0 +1,11 @@
+<section>
+    <h1>System overview</h1>
+    <div class="item" *ngFor="let item of items;index as index">
+        <div class="title">
+            <span>{{ item.text }}</span>
+        </div>
+        <div class="selector" *ngIf="item.type == 'select'">
+            <div *ngFor="let option of item.data.values" [ngClass]="{option: true, selected: item.data.selected[0] == option}" >{{ option }}</div>
+        </div>
+    </div>
+</section>

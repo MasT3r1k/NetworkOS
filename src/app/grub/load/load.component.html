@@ -1,0 +1,8 @@
+<p>Select system you wanna continue to</p>
+<p class="error" *ngIf="systems.length == 0">Omlouváme se, ale na tomto disku se nenachází žádný spustitelný systém.</p>
+<div class="systems" *ngIf="systems.length > 1">
+    <div class="system" *ngFor="let system of systems;index as i">
+        <p style="margin-bottom: 0;">{{ system.name }} (ID: {{ system.id }})</p>
+        <p style="margin-top: 0;">Build: {{ system.buildOs }}</p>
+    </div>
+</div>

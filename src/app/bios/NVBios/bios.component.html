@@ -1,0 +1,49 @@
+<div class="screen">
+    <div class="navbar">
+        <div class="left">
+            <div class="header">
+                <h1>NVBios</h1>
+            </div>
+            <ul class="items">
+                <li *ngFor="let li of BiosPages;index as index" [ngClass]="{active: BiosPage == index}" (click)="moveTo(index)">{{ li }}</li>
+            </ul>
+        </div>
+        <div class="right">
+            <div class="column">
+                <p>Version: {{ Bios.Version }}</p>
+                <p>{{ Bios.variables["description"] }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="left">
+            <section [ngClass]="{movingLeft: animation == 'left', movingRight: animation == 'right'}">
+                <h1>{{ Bios.BiosOptions[BiosPage].title }}</h1>
+                <div [ngClass]="{item: true, readonly: item.readonly || false, selected: index == selected_item}" *ngFor="let item of Bios.BiosOptions[BiosPage].items;index as index" (click)="selectItem(index)">
+                    <div class="title">
+                        <span>{{ item.text }}</span>
+                    </div>
+                    <div class="value selector" *ngIf="item.type == 'select' && item.data?.selected">
+                        <div *ngFor="let option of item.data?.values;index as index" [ngClass]="{option: true, selected: item.data.selected?.[0] == index}" >{{ option }}</div>
+                    </div>
+                    <div class="value inputor" *ngIf="item.type == 'input' && item.data?.options">
+                        <div *ngFor="let option of item.data?.options;index as index">{{ item.data.values[index] }}<span *ngIf="index < item.data.values.length - 1">{{ item.data.seperator }}</span></div>
+                    </div>
+                    <div class="value info" *ngIf="item.type == 'info' && item.data?.values">
+                        <div *ngFor="let info of item.data?.values">{{ info }}</div>
+                    </div>
+                    <div class="value empty" *ngIf="item.type == 'empty'">
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="right">
+            <div class="description">
+                <span *ngIf="Bios.BiosOptions[BiosPage].items[selected_item]?.description && animation == null" [innerHTML]="Bios.BiosOptions[BiosPage].items[selected_item].description"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" *ngIf="editing_item != null && Bios.BiosOptions[BiosPage].items[editing_item].type == 'select'">
+    <div *ngFor="let item of Bios.BiosOptions[BiosPage].items[editing_item].data?.values">{{ item }}</div>
+</div>
