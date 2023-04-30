@@ -16,6 +16,7 @@ export class LoadComponent implements OnInit {
 
   systems: SystemConfig[] = [];
 
+  system: SystemConfig | null = null;
 
   ngOnInit(): void {
     Object.values(Grub.GetSystems()).forEach((os, index) => {
@@ -24,6 +25,7 @@ export class LoadComponent implements OnInit {
     });
     if (this.systems.length == 1) {
       Grub.SelectSystem(this.systems[0].id)
+      this.system = Grub.GetSelectedSystem()
     }
   }
 

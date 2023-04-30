@@ -1,5 +1,5 @@
 <div class="screen">
-    <div class="navbar">
+    <div class="navbar" *ngIf="!(Bios.biosScreenType == 'flash' && BiosFlash.customInstaller !== null)">
         <div class="left">
             <div class="header">
                 <h1>NVBios</h1>
@@ -42,6 +42,9 @@
                 <span *ngIf="Bios.BiosOptions[Bios.BiosPage].items[Bios.selected_item]?.description && Bios.animation == null" [innerHTML]="Bios.BiosOptions[Bios.BiosPage].items[Bios.selected_item].description"></span>
             </div>
         </div>
+    </div>
+    <div class="content" *ngIf="BiosFlash.status == true && Bios.biosScreenType == 'flash'">
+        <h1>{{ BiosFlash.title }}</h1>
     </div>
 </div>
 <div class="modal" *ngIf="Bios.editing_item != null && Bios.BiosOptions[Bios.BiosPage].items[Bios.editing_item].type == 'select'">

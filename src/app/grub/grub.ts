@@ -12,8 +12,7 @@ interface GrubInterface {
 class GrubClass implements GrubInterface {
     selected_system: valid_systems | null = null;
     systems: Record<valid_systems, SystemConfig> = {
-        NVOS: NVOSConfig,
-        TestOS: NVOSConfig
+        NVOS: NVOSConfig
     };
 
     constructor() { 
@@ -30,6 +29,10 @@ class GrubClass implements GrubInterface {
     public GetSelectedSystem() {                            //! NULL = not selected system, other = system config
         if (this.selected_system === null) return null;
         return this.systems[this.selected_system];
+    }
+
+    public loadInstallation(system: valid_systems) {
+
     }
 }
 

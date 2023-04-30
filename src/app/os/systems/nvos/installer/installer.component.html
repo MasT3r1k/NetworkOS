@@ -1,0 +1,56 @@
+<div class="screen">
+    <div class="card">
+        <div class="left">
+            <div class="title"><p style="margin-bottom: 5px;">Network Vision</p><p style="margin-top: 5px;font-weight: 700;">Installation</p></div>
+            <div class="road">
+                <ul>
+                    <li *ngFor="let section of sections;index as index" [ngClass]="{active: active == index }">{{ section }}</li>
+                </ul>
+            </div>
+        </div>
+        <div class="right">
+            <section [ngClass]="{active: active == 0}">
+                <h1>{{ sections[0] }}</h1>
+                <p class="desc">{{ InsllationOptions.edition.length }} edition are available:</p>
+                <div class="select">
+                    <div [ngClass]="{option: true, active: index == InstallationSelected.edition}" *ngFor="let system of InsllationOptions.edition;index as index" (click)="InstallationSelected.edition = index">{{ system }}</div>
+                </div>
+                <p class="title"><b>THANK YOU!</b></p>
+                <p class="desc">Thank you for choosing our Network OS. We hope you will be as satisfied as we are!</p>
+            </section>
+            <section [ngClass]="{active: active == 1}">
+                <h1>{{ sections[1] }}</h1>
+                <div class="items">
+                    <div [ngClass]="{item: true, active: InstallationSelected.installationType == 0}" (click)="InstallationSelected.installationType = 0">
+                        <div class="icon">
+                            <i class="fa-solid fa-floppy-disks"></i>
+                        </div>
+                        <div class="right">
+                            <p class="item-title">Automatic System Installation (Recommend)</p>
+                            <p class="item-desc">This action is completely automatic. The system will design the disk layout and install the system on the disk itself. This action is recommended.</p>
+                        </div>
+                    </div>
+                    <div [ngClass]="{item: true, active: InstallationSelected.installationType == 1}" (click)="InstallationSelected.installationType = 1">
+                        <div class="icon">
+                            <i class="fa-solid fa-display-code"></i>
+                        </div>
+                        <div class="right">
+                            <p class="item-title">Advanced System Installation</p>
+                            <p class="item-desc">In this option, you can set up disks at your discretion, install the system on a specific partition of your choice.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section [ngClass]="{active: active == 2}">
+                <h1>{{ sections[2] }}</h1>
+            </section>
+            <div class="actions">
+                <div class="exit"><i class="fa-solid fa-xmark"></i></div>
+                <div class="buttons">
+                    <div [ngClass]="{prev: true, active: sections[active - 1]}" (click)="go(active - 1)">Prev</div>
+                    <div class="next active" (click)="go(active + 1)">{{ (sections[active + 1]) ? 'Next' : 'Done'}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

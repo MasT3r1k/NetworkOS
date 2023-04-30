@@ -9,6 +9,7 @@ import { OsComponent } from './os/os.component';
 import { LoadComponent } from './grub/load/load.component';
 import { NvosComponent } from './os/systems/nvos/nvos.component';
 import { LoaderComponent } from './os/systems/nvos/loader/loader.component';
+import { InstallerComponent } from './os/systems/nvos/installer/installer.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { LoaderComponent } from './os/systems/nvos/loader/loader.component';
     OsComponent,
     LoadComponent,
     NvosComponent,
-    LoaderComponent
+    LoaderComponent,
+    InstallerComponent
   ],
   imports: [
     BrowserModule,

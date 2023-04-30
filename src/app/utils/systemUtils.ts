@@ -7,10 +7,11 @@ export interface SystemConfig extends Record<string, any> {
     buildOs?: string;                                                        //* OS version / default: 1.0
     mainComponent: Type<any>;                                               //* OS Main component
     loaderComponent?: Type<any>;                                             //* OS Loader component / default grub loader
-    system_disk: number; // TODO: Accept only registered disk               //* Disk where is os installed
-    author?: string;                                                         //* OS Author / default: Anonymous
-    color?: string;                                                         //* Main color of os (for better orientation in grub menu)
-    options?: Record<string, any>;                                           //* OS options (optional)
+    installComponent?: Type<any>;                                           //* OS Installer component / default bios installer
+    system_disk: number; // TODO: Accept only registered disk                //* Disk where is os installed
+    author?: string;                                                        //* OS Author / default: Anonymous
+    color?: string;                                                          //* Main color of os (for better orientation in grub menu)
+    options?: Record<string, any>;                                          //* OS options (optional)
 }
 
 export namespace SystemUtils {

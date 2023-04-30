@@ -4,6 +4,7 @@ import {Title} from "@angular/platform-browser";
 import { Bios } from '../bios';
 import { BiosConfig } from '../config';
 import { Utils } from 'src/app/utils/NVUtils';
+import { BiosFlash } from '../biosFlash';
 
 @Component({
   selector: 'app-bios',
@@ -18,6 +19,7 @@ export class BiosComponent {
   Utils = Utils;            // My own functions for better experience
   Bios = Bios               // Bios implement
   BiosConfig = BiosConfig;  // Bios config
+  BiosFlash = BiosFlash;
 
   ngOnDestroy(): void {
     Bios.reloadBios();      // Reset bios cursor position

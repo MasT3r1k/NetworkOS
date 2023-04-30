@@ -1,14 +1,16 @@
-import { BiosConfig } from "./config";
 import { Utils } from "../utils/NVUtils";
 import { Calendar } from "../utils/calendarManager";
 import { cpu } from "../virtualComputer/hardwares/cpu";
 import { SystemUtils } from "../utils/systemUtils";
 import { Router } from "@angular/router";
+import { BiosFlash } from "./biosFlash";
+import { valid_systems } from "../os/systems/systems";
 
 type BiosItemType = 'select' | 'input' | 'info' | 'empty' | 'execute';
 type BiosScreenType = 'main' | 'flash';
 type BiosSectionAnimation = 'left' | 'right';
 type BiosUserPlatform = 'Administrator' | 'User';
+export type valid_bios = 'nvbios';
 
 interface BiosItemSelect {
     selected?: string[] | number[];
@@ -31,7 +33,9 @@ interface BiosItem {
     readonly?: boolean;
     dynamic?: boolean;
     execute?: Function[];
-    exit?: boolean | string;
+    exit?: boolean | BiosScreenType;
+    flashType?: BiosFlash.FlashTypes;
+    flashName?: valid_systems | valid_bios;
     data: BiosItemSelect;
 }
 interface BiosOptions {
@@ -59,6 +63,7 @@ export namespace Bios {
     export let modal_item: string | number = 0;
     export let animation: BiosSectionAnimation | null = null;
     export let biosScreenType: BiosScreenType = 'main';
+    export let _flashType: BiosItem | null = null;
     export let Time: BiosTime = {
         Time: Calendar.time,
         Offset: Calendar.offset
@@ -75,6 +80,7 @@ export namespace Bios {
         Bios.modal_item = 0;
         Bios.animation = null;
         Bios.biosScreenType = 'main';
+        Bios._flashType = null;
     }
 
 
@@ -418,6 +424,8 @@ export namespace Bios {
                 type: 'execute',
                 description: 'Run the utility to select or update BIOS. This utility supports: Fat 12/16/32, NTFS, CD-DISC',
                 exit: 'flash',
+                flashType: 'bios',
+                flashName: 'nvbios',
                 data: {
                     selected: [0],
                     values: []
@@ -427,6 +435,8 @@ export namespace Bios {
                 type: 'execute',
                 description: 'Run the utility to install operation system: NVOS. This utility supports: NTFS',
                 exit: 'flash',
+                flashType: 'os',
+                flashName: 'NVOS',
                 data: {
                     selected: [0],
                     values: []
@@ -573,10 +583,23 @@ export namespace Bios {
                     });
                     switch(Bios.BiosOptions[Bios.BiosPage].items[Bios.selected_item].exit){
                         case true:
-                        router.navigate(['/']);
+                            router.navigate(['/']);
                         break;
                         case "flash":
-                        Bios.biosScreenType = 'flash';
+                            Bios.biosScreenType = 'flash';
+                            Bios._flashType = Bios.BiosOptions[Bios.BiosPage].items[Bios.selected_item];
+                            let flashType = Bios._flashType.flashType;
+                            let flashName = Bios._flashType.flashName;
+                            if (flashName) {
+                                switch(flashType) {
+                                    case "os":
+                                        BiosFlash.installOS(flashName as valid_systems);
+                                    break;
+                                    case "bios":
+                                        BiosFlash.installBIOS(flashName as valid_bios)
+                                    break;
+                                }
+                            }
                         break;
                     }
                     break;
@@ -592,11 +615,12 @@ export namespace Bios {
                 break;
             case "Escape":
                 if (Bios.biosScreenType == 'main') {
-                if (Bios.editing_item != null) {
-                    Bios.editing_item = null;
-                }
+                    if (Bios.editing_item != null) {
+                        Bios.editing_item = null;
+                    }
                 }else if (Bios.biosScreenType == 'flash') {
-                Bios.biosScreenType = 'main';
+                    Bios.biosScreenType = 'main';
+                    BiosFlash.exitFlash();
                 }
                 break;
             }

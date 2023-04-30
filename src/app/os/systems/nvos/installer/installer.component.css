@@ -1,0 +1,234 @@
+.screen {
+    background-image: url('/assets/nvos-bg.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    aspect-ratio: 16/9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ddd;
+}
+
+.card {
+    width: 960px;
+    height: 600px;
+    background-color: rgba(0, 0, 0, .2);
+    border-radius: 1rem;
+    box-shadow: 0 0 4px #2999ed;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+}
+
+.card > div {
+    padding: 1rem;
+}
+
+.card > .left {
+    width: 30%;
+    border-top-left-radius: inherit;
+    border-bottom-left-radius: inherit;
+}
+
+.card > .left .title {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
+    position: relative;
+}
+
+.card > .left .title::after {
+    content: '';
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
+    width: 50%;
+    height: 2px;
+    border-radius: 2px;
+    background-image: linear-gradient(to right, #2999ed, #11589c);
+}
+
+.card > .left ul {
+    padding: 1rem 0;
+    list-style: none;
+}
+
+.card > .left ul li {
+    padding: 8px 24px;
+    margin: 8px 0;
+}
+
+.card > .left ul li.active {
+    background-color: rgba(43, 43, 43, .35);
+}
+
+.card > .right {
+    width: 70%;
+    background-color: rgba(0, 0, 0, .45);
+    padding: 2rem;
+    border-top-right-radius: inherit;
+    border-bottom-right-radius: inherit;
+}
+
+.card > .right section {
+    display: none;
+    flex-direction: column;
+}
+
+.card > .right section.active {
+    display: flex;
+}
+
+
+.card > .right h1 {
+    color: #fff;
+    font-size: 24px;
+}
+
+.card > .right .select {
+    width: 100%;
+    padding: 12px 24px;
+    position: relative;
+    cursor: pointer;
+    transition: all .3s;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+
+.card > .right .select .option {
+    width: 100%;
+    padding: 12px 24px;
+    position: relative;
+    cursor: pointer;
+    transition: all .3s;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.card > .right .select .option:not(.active) {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.card > .right .select .option:hover {
+    background-color: rgba(40, 40, 40, .65);
+}
+
+.card > .right .select .option.active::after {
+    position: absolute;
+    content: '';
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    background-image: linear-gradient(to right, #2999ed, #11589c);
+}
+
+
+.card > .right .title {
+    font-size: 28px;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.card > .right p.desc {
+    font-size: 18px;
+    margin: 10px;
+}
+
+.card > .right .items {
+    display: flex;
+    flex-direction: column;
+}
+
+.card > .right .items .item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all .3s;
+    position: relative;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    margin-bottom: 1rem;
+
+}
+
+.card > .right .items .item.active::after {
+    position: absolute;
+    content: '';
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    background-image: linear-gradient(to right, #2999ed, #11589c);
+}
+
+.card > .right .items .item:hover {
+    background-color: rgba(40, 40, 40, .65);
+
+}
+
+.card > .right .items .item .item-title {
+    color: #fff;
+    font-weight: 600;
+    font-size: 20px;
+    margin: 0;
+}
+
+.card > .right .items .item .item-desc {
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+.card > .right .items .item .icon {
+    font-size: 48px;
+    margin-right: 1.5rem;
+}
+
+.card > .right .actions .buttons {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    display: flex;
+    flex-direction: row;
+}
+
+.card > .right .actions .buttons div {
+    display: none;
+    pointer-events: none;
+    padding: 8px 24px;
+    margin: 0 8px;
+    font-size: 16px;
+    border-radius: 4px;
+    background-color: rgba(40, 40, 40, .75);
+    cursor: pointer;
+    user-select: none;
+}
+
+.card > .right .actions .buttons div.active {
+    display: block;
+    pointer-events: all;
+}
+
+.card > .right .actions .exit {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 28px;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+}
