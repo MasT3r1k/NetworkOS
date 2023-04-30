@@ -5,7 +5,7 @@
                 <h1>NVBios</h1>
             </div>
             <ul class="items">
-                <li *ngFor="let li of BiosPages;index as index" [ngClass]="{active: BiosPage == index}" (click)="moveTo(index)">{{ li }}</li>
+                <li *ngFor="let li of Bios.BiosPages;index as index" [ngClass]="{active: Bios.BiosPage == index}" (click)="Bios.moveTo(index)">{{ li }}</li>
             </ul>
         </div>
         <div class="right">
@@ -15,11 +15,11 @@
             </div>
         </div>
     </div>
-    <div class="content">
+    <div class="content" *ngIf="Bios.biosScreenType == 'main'">
         <div class="left">
-            <section [ngClass]="{movingLeft: animation == 'left', movingRight: animation == 'right'}">
-                <h1>{{ Bios.BiosOptions[BiosPage].title }}</h1>
-                <div [ngClass]="{item: true, readonly: item.readonly || false, selected: index == selected_item}" *ngFor="let item of Bios.BiosOptions[BiosPage].items;index as index" (click)="selectItem(index)">
+            <section [ngClass]="{movingLeft: Bios.animation == 'left', movingRight: Bios.animation == 'right'}">
+                <h1>{{ Bios.BiosOptions[Bios.BiosPage].title }}</h1>
+                <div [ngClass]="{item: true, readonly: item.readonly || false, selected: index == Bios.selected_item}" *ngFor="let item of Bios.BiosOptions[Bios.BiosPage].items;index as index" (click)="Bios.selectItem(index)" (dblclick)="runKeyboard('Enter')">
                     <div class="title">
                         <span>{{ item.text }}</span>
                     </div>
@@ -39,11 +39,11 @@
         </div>
         <div class="right">
             <div class="description">
-                <span *ngIf="Bios.BiosOptions[BiosPage].items[selected_item]?.description && animation == null" [innerHTML]="Bios.BiosOptions[BiosPage].items[selected_item].description"></span>
+                <span *ngIf="Bios.BiosOptions[Bios.BiosPage].items[Bios.selected_item]?.description && Bios.animation == null" [innerHTML]="Bios.BiosOptions[Bios.BiosPage].items[Bios.selected_item].description"></span>
             </div>
         </div>
     </div>
 </div>
-<div class="modal" *ngIf="editing_item != null && Bios.BiosOptions[BiosPage].items[editing_item].type == 'select'">
-    <div *ngFor="let item of Bios.BiosOptions[BiosPage].items[editing_item].data?.values;index as index" [ngClass]="{active: index == modal_item}">{{ item }}</div>
+<div class="modal" *ngIf="Bios.editing_item != null && Bios.BiosOptions[Bios.BiosPage].items[Bios.editing_item].type == 'select'">
+    <div *ngFor="let item of Bios.BiosOptions[Bios.BiosPage].items[Bios.editing_item].data?.values;index as index" [ngClass]="{active: index == Bios.modal_item}">{{ item }}</div>
 </div>

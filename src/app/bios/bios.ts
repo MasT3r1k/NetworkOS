@@ -3,8 +3,12 @@ import { Utils } from "../utils/NVUtils";
 import { Calendar } from "../utils/calendarManager";
 import { cpu } from "../virtualComputer/hardwares/cpu";
 import { SystemUtils } from "../utils/systemUtils";
+import { Router } from "@angular/router";
 
 type BiosItemType = 'select' | 'input' | 'info' | 'empty' | 'execute';
+type BiosScreenType = 'main' | 'flash';
+type BiosSectionAnimation = 'left' | 'right';
+
 interface BiosItemSelect {
     selected?: string[] | number[];
     seperator?: string;
@@ -26,7 +30,7 @@ interface BiosItem {
     readonly?: boolean;
     dynamic?: boolean;
     execute?: Function[];
-    exit?: boolean;
+    exit?: boolean | string;
     data: BiosItemSelect;
 }
 interface BiosOptions {
@@ -51,10 +55,61 @@ interface BiosSecurity {
 
 export namespace Bios {
     export const Language: BiosConfig.supported_languages = "Czech";
+    export let BiosPage: number = 0;
+    export let BiosPages: string[] = [];
+    export let selected_item: number = 0;
+    export let editing_item: number | null = null;
+    export let modal_item: string | number = 0;
+    export let animation: BiosSectionAnimation | null = null;
+    export let biosScreenType: BiosScreenType = 'main';
     export let Time: BiosTime = {
         Time: Calendar.time,
         Offset: Calendar.offset
     };
+
+    export function reloadBios() {
+        Bios.BiosPage = 0;
+        Bios.BiosPages = [];
+        Bios.selected_item = 0;
+        Bios.editing_item = null;
+        Bios.modal_item = 0;
+        Bios.animation = null;
+        Bios.biosScreenType = 'main';
+    }
+
+
+    export function moveTo(page: number) {
+        if (Bios.editing_item != null) return;
+        if (Bios.animation !== null) return;
+        if (page == Bios.BiosPage) return;
+        if (page == Bios.BiosPages.length) return;
+        if (!Bios.BiosPages[page] || !Bios.BiosOptions[page]) return;
+        let direction: BiosSectionAnimation = (page < Bios.BiosPage) ? 'left' : 'right';
+        Bios.animation = direction;
+        setTimeout(() => {
+          Bios.BiosPage = page;
+          Bios.selectItem(null);
+          Bios.animation = null;
+        }, 350)
+      }
+    
+
+    export function selectItem(id: number | null) {
+        if (Bios.editing_item != null) return;
+        if (id === null) {
+          let newId = 0;
+          while (Bios.BiosOptions[Bios.BiosPage].items[newId]) {
+            if (!(Bios.BiosOptions[Bios.BiosPage].items[newId].readonly == true)) {
+                Bios.selected_item = newId;
+                return;
+            }
+            newId += 1;
+          }
+        }
+        else if (Bios.BiosOptions[Bios.BiosPage].items[id as number]?.readonly !== true) {
+            Bios.selected_item = id;
+        }
+      }
     
     export let default_config = {
         lgn: 1,                 // Language
@@ -362,6 +417,7 @@ export namespace Bios {
                 text: 'Flash disk 16GB (Bios Flash)',
                 type: 'execute',
                 description: 'Run the utility to select or update BIOS. This utility supports: Fat 12/16/32, NTFS, CD-DISC',
+                exit: 'flash',
                 data: {
                     selected: [0],
                     values: []
@@ -370,6 +426,7 @@ export namespace Bios {
                 text: 'Flash disk 64GB (NVOS Flash)',
                 type: 'execute',
                 description: 'Run the utility to install operation system: NVOS. This utility supports: NTFS',
+                exit: 'flash',
                 data: {
                     selected: [0],
                     values: []
@@ -457,5 +514,91 @@ export namespace Bios {
     setInterval(() => {
         updateOptions(Bios.BiosOptions);
     }, 1000)
+
+    export function keyboardEvent(key: string, lastItem: number, newItem: number, router: Router) {
+        switch(key) {
+            case "ArrowUp":
+                if (Bios.biosScreenType == 'main') {
+                    if (Bios.editing_item == null) {
+                        while (Bios.BiosOptions[Bios.BiosPage].items[newItem - 1] && lastItem == Bios.selected_item) {
+                        newItem -= 1;
+                        Bios.selectItem(newItem);
+                        }
+                    }else{
+                        let item = Bios.modal_item;
+                        if (Bios.BiosOptions[Bios.BiosPage].items[Bios.editing_item].data.values?.[item as number - 1]) {
+                        Bios.modal_item = item as number - 1;
+                        }
+                    }
+                }
+                break;
+            case "ArrowDown":
+                if (Bios.biosScreenType == 'main') {
+                    if (Bios.editing_item == null) {
+                        while (Bios.BiosOptions[Bios.BiosPage].items[newItem + 1] && lastItem == Bios.selected_item) {
+                            newItem += 1;
+                            Bios.selectItem(newItem);
+                        }
+                    }else{
+                        let item = Bios.modal_item;
+                        if (Bios.BiosOptions[Bios.BiosPage].items[Bios.editing_item].data.values?.[item as number + 1]) {
+                            Bios.modal_item = item as number + 1;
+                        }
+                    }
+                }
+                break;
+            case "ArrowLeft":
+                if (Bios.biosScreenType == 'main') {
+                Bios.moveTo(Bios.BiosPage - 1);
+                }
+                break;
+            case "ArrowRight":
+                if (Bios.biosScreenType == 'main') {
+                Bios.moveTo(Bios.BiosPage + 1);
+                }
+                break;
+            case "Enter":
+                let item = Bios.BiosOptions[Bios.BiosPage].items[Bios.selected_item];
+                if (Bios.editing_item == null) {
+                switch(item.type) {
+                    case "select":
+                    Bios.editing_item = Bios.selected_item;
+                    Bios.modal_item = item.data?.selected?.[0] as string | number;
+                    break;
+                    case "execute":
+                    Bios.BiosOptions[Bios.BiosPage].items[Bios.selected_item].execute?.forEach(func => {
+                        func()
+                    });
+                    switch(Bios.BiosOptions[Bios.BiosPage].items[Bios.selected_item].exit){
+                        case true:
+                        router.navigate(['/']);
+                        break;
+                        case "flash":
+                        Bios.biosScreenType = 'flash';
+                        break;
+                    }
+                    break;
+                    default:
+                    console.error("Enter event is missing.");
+                    break;
+                }
+                }else{
+                item.data.selected = [Bios.modal_item as number];
+                Bios.data[item.data?.data as string] = Bios.modal_item as string;
+                Bios.editing_item = null;
+                }
+                break;
+            case "Escape":
+                if (Bios.biosScreenType == 'main') {
+                if (Bios.editing_item != null) {
+                    Bios.editing_item = null;
+                }
+                }else if (Bios.biosScreenType == 'flash') {
+                Bios.biosScreenType = 'main';
+                }
+                break;
+            }
+        
+    }
 
 }
