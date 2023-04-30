@@ -8,6 +8,7 @@ import { Router } from "@angular/router";
 type BiosItemType = 'select' | 'input' | 'info' | 'empty' | 'execute';
 type BiosScreenType = 'main' | 'flash';
 type BiosSectionAnimation = 'left' | 'right';
+type BiosUserPlatform = 'Administrator' | 'User';
 
 interface BiosItemSelect {
     selected?: string[] | number[];
@@ -42,9 +43,6 @@ interface BiosTime {
     Time: Date;
     Offset: number;
 }
-
-type BiosUserPlatform = 'Administrator' | 'User';
-
 interface BiosSecurity {
     AdministratorPassword: string;
     SataPassword: string[];
@@ -54,7 +52,6 @@ interface BiosSecurity {
 
 
 export namespace Bios {
-    export const Language: BiosConfig.supported_languages = "Czech";
     export let BiosPage: number = 0;
     export let BiosPages: string[] = [];
     export let selected_item: number = 0;
@@ -70,6 +67,9 @@ export namespace Bios {
     export function reloadBios() {
         Bios.BiosPage = 0;
         Bios.BiosPages = [];
+        Bios.BiosOptions.forEach(item => {
+            Bios.BiosPages.push(item.navbar);
+        });
         Bios.selected_item = 0;
         Bios.editing_item = null;
         Bios.modal_item = 0;
@@ -515,7 +515,9 @@ export namespace Bios {
         updateOptions(Bios.BiosOptions);
     }, 1000)
 
-    export function keyboardEvent(key: string, lastItem: number, newItem: number, router: Router) {
+    export function keyboardEvent(key: string, router: Router) {
+        let lastItem = Bios.selected_item;
+        let newItem = Bios.selected_item;
         switch(key) {
             case "ArrowUp":
                 if (Bios.biosScreenType == 'main') {

@@ -15,37 +15,32 @@ export class BiosComponent {
     this.titleService.setTitle("Bios | Network Vision");
   }
 
-  Utils = Utils;
-
-  Bios = Bios
-  BiosConfig = BiosConfig;
+  Utils = Utils;            // My own functions for better experience
+  Bios = Bios               // Bios implement
+  BiosConfig = BiosConfig;  // Bios config
 
   ngOnDestroy(): void {
-    Bios.reloadBios();
+    Bios.reloadBios();      // Reset bios cursor position
+    window.removeEventListener("keydown", this.eventKeyboard, true)
   }
 
   ngOnInit(): void {
-
     Bios.reloadBios();
 
-    
     setInterval(() => {
       this.Bios = Bios
     }, 1000)
 
-    Bios.BiosOptions.forEach(item => {
-      Bios.BiosPages.push(item.navbar);
-    });
-
-    window.addEventListener("keydown", (e) => {
-      if (this.router.url != "/bios") return;
-      Bios.keyboardEvent(e.key, Bios.selected_item, Bios.selected_item, this.router);
-    });
+    window.addEventListener("keydown", this.eventKeyboard, true)
 
   }
 
-  public runKeyboard(key: string) {
+  public eventKeyboard = (e: KeyboardEvent): void => {
+    this.runKeyboard(e.key)
+  }
+
+  public runKeyboard = (key: string) => {
     if (this.router.url != "/bios") return;
-    Bios.keyboardEvent(key, Bios.selected_item, Bios.selected_item, this.router);
+    Bios.keyboardEvent(key, this.router);
   }
 }
