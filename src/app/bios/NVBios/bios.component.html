@@ -1,5 +1,5 @@
 <div class="screen">
-    <div class="navbar" *ngIf="!(Bios.biosScreenType == 'flash' && BiosFlash.customInstaller !== null)">
+    <div class="navbar" *ngIf="!(Bios.biosScreenType == 'flash')">
         <div class="left">
             <div class="header">
                 <h1>NVBios</h1>
@@ -11,7 +11,7 @@
         <div class="right">
             <div class="column">
                 <p>Version: {{ Bios.Version }}</p>
-                <p>{{ Bios.variables["description"] }}</p>
+                <p [innerHTML]="Bios.variables['description']"></p>
             </div>
         </div>
     </div>
@@ -44,6 +44,7 @@
         </div>
     </div>
     <div class="content" *ngIf="BiosFlash.status == true && Bios.biosScreenType == 'flash'">
+        
         <h1>{{ BiosFlash.title }}</h1>
     </div>
 </div>

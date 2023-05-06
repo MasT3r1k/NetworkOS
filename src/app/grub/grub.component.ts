@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class GrubComponent {
 
+
   public keys: any = {accessBios: BiosConfig.EnterBiosKeys};
   eventKeydown = (e: KeyboardEvent, keys = this.keys) => {
     if (keys.accessBios.includes(e.key)) { this.router.navigate(["/bios"], { skipLocationChange: true }); }

@@ -502,10 +502,10 @@ export namespace Bios {
             }]
         }
     ]
-    export const Version: string = "1.0.0 Alpha";
+    export const Version: string = "1.0.2 Alpha";
 
     export const variables: Record<string, string> = {
-        description: "Created by MasTerik"
+        description: "<b>Work in progress</b>"
     }
 
     function updateOptions(BiosOptions: BiosOptions[]) {
@@ -594,6 +594,7 @@ export namespace Bios {
                                 switch(flashType) {
                                     case "os":
                                         BiosFlash.installOS(flashName as valid_systems);
+                                        router.navigate(['/grub'], {skipLocationChange: true})
                                     break;
                                     case "bios":
                                         BiosFlash.installBIOS(flashName as valid_bios)

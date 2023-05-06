@@ -1,7 +1,7 @@
-<div class="screen" *ngIf="systems.length != 1">
+<div class="screen" *ngIf="Grub.loader == 'systems'">
     <p class="title">Select system you wanna continue to</p>
     <p class="error" *ngIf="systems.length == 0">Omlouváme se, ale na tomto disku se nenachází žádný spustitelný systém.</p>
-    <div class="systems" *ngIf="systems.length > 1">
+    <div class="systems" *ngIf="systems.length > 0">
         <div class="system" *ngFor="let system of systems;index as i">
             <div class="left">
                 <p class="name">{{ system.name }}</p>
@@ -10,4 +10,4 @@
     </div>
 </div>
 
-<ng-container [ngComponentOutlet]="system.installComponent" *ngIf="system != null && system.installComponent"></ng-container>
+<ng-container [ngComponentOutlet]="system.installComponent" *ngIf="system != null && system.installComponent && Grub.loader == 'install'"></ng-container>

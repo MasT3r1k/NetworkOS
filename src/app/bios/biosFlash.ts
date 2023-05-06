@@ -26,6 +26,7 @@ export namespace BiosFlash {
         BiosFlash.type = 'os';
         BiosFlash.status = true;
         BiosFlash.system = Grub.GetSystems()[name as valid_systems];
+        Grub.loadInstallation(name as valid_systems);
         BiosFlash.title = BiosFlash.system.name;
         BiosFlash.customInstaller = BiosFlash.system.installComponent || null;
     }

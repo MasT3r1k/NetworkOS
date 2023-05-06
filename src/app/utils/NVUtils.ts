@@ -20,4 +20,9 @@ export namespace Utils {
     export function isEmpty(string: string | Array<String>): boolean {
         return (string == '' || string == '[]');
     }
+
+    export class NVItems {
+
+        constructor() {}
+    }
 }

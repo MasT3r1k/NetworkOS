@@ -9,14 +9,15 @@ import {Title} from "@angular/platform-browser";
   styleUrls: ['./load.component.css']
 })
 export class LoadComponent implements OnInit {
+  public Grub = Grub;
 
   constructor(private titleService:Title) {
     this.titleService.setTitle("Grub | Network Vision");
   }
 
-  systems: SystemConfig[] = [];
 
-  system: SystemConfig | null = null;
+  systems: SystemConfig[] = [];
+  system: SystemConfig | null = Grub.GetSelectedSystem();
 
   ngOnInit(): void {
     Object.values(Grub.GetSystems()).forEach((os, index) => {
