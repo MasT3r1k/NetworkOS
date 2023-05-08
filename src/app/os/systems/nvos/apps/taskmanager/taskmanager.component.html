@@ -1,7 +1,7 @@
 <h1>Spuštěné aplikace ({{ getProcesses(processes, false).length }}):</h1>
 
 <div *ngFor="let process of getProcesses(processes, false)">
-    <p>{{ process.name }}</p>
+    <p>{{ process.name }} / Počet otevřených oken: {{ process.windows.length }} z {{ process.maxWindows }}</p>
 </div>
 
 <h1>Procesy na pozadí ({{ getProcesses(processes, true).length }}) :</h1>
