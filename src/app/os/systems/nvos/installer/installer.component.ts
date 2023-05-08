@@ -194,7 +194,7 @@ export class InstallerComponent {
               this.sections[2].buttons.next.allowed = false;
             }
           }
-        }, 900)
+        }, 10)
       }
     }}],
     items: [{
@@ -211,6 +211,10 @@ export class InstallerComponent {
       prev: {
         hidden: true,
         allowed: false
+      },
+      next: {
+        allowed: true,
+        text: 'Restart now'
       }
     },
     requirement: [{
@@ -218,8 +222,21 @@ export class InstallerComponent {
     }],
     items: [{
       type: 'text',
-      values: ['There is where you can set your device name']
+      values: ['The device reboots in 5 seconds and loads into the system for the first time!']
     }]
+  }, {
+    title: 'Restarting device',
+    sidebar: 'Set Up System',
+    requirement: [{
+      require: ['sections/2/items/1/values', 100],
+      allow: () => {
+        Grub.resetGrub();
+        Grub.SelectSystem("NVOS");
+        Grub.loadIntoSystem();
+        this.router.navigate(['/']);
+      }
+    }],
+    items: []
   }]
 
     this.sections.forEach((a) => {

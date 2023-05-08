@@ -1,13 +1,13 @@
 import { SystemConfig } from "src/app/utils/systemUtils";
-import { OsComponent } from "../../os.component";
 import { LoaderComponent } from "./loader/loader.component";
 import { InstallerComponent } from "./installer/installer.component";
+import { NvosComponent } from "./nvos.component";
 
 export const config: SystemConfig = {
     id: "NVOS",
     name: "NetworkVision OS",
     buildOs: "1.0.0 Beta, #001",
-    mainComponent: OsComponent,
+    mainComponent: NvosComponent,
     loaderComponent: LoaderComponent,
     installComponent: InstallerComponent,
     system_disk: 0,

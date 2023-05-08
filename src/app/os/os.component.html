@@ -1,3 +1,1 @@
-<p>OS NAME: {{ systemConfig.name }}</p>
-<p>OS Build: {{ systemConfig.buildOs }}</p>
-<p>OS Author: {{ systemConfig.author }}</p>
+<ng-component [ngComponentOutlet]="systemConfig.mainComponent" *ngIf="systemConfig.mainComponent"></ng-component>

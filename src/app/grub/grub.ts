@@ -2,7 +2,7 @@ import { config as NVOSConfig } from "../os/systems/nvos/config";
 import { valid_systems } from "../os/systems/systems";
 import { SystemConfig } from "../utils/systemUtils";
 
-type Loader = 'systems' | 'install';
+type Loader = 'systems' | 'install' | 'loadSystem';
 
 interface GrubInterface {
     selected_system: valid_systems | null;
@@ -22,7 +22,7 @@ class GrubClass implements GrubInterface {
         this.resetGrub();
     }
 
-    public GetSystems() {
+    public GetSystems(): Record<valid_systems, SystemConfig> {
         return this.systems;
     }
 
@@ -30,12 +30,12 @@ class GrubClass implements GrubInterface {
         this.selected_system = name;
     }
 
-    public GetSelectedSystem() {                            //! NULL = not selected system, other = system config
+    public GetSelectedSystem(): SystemConfig | null {
         if (this.selected_system === null) return null;
         return this.systems[this.selected_system];
     }
 
-    public loadInstallation(system: valid_systems) {
+    public loadInstallation(system: valid_systems): void {
         this.loader = 'install';
         this.selected_system = system;
     }
@@ -43,6 +43,10 @@ class GrubClass implements GrubInterface {
     public resetGrub(): void {
         this.loader = 'systems';
         this.selected_system = null;
+    }
+
+    public loadIntoSystem(): void {
+        this.loader = 'loadSystem';
     }
 
 }

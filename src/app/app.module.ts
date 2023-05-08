@@ -10,6 +10,8 @@ import { LoadComponent } from './grub/load/load.component';
 import { NvosComponent } from './os/systems/nvos/nvos.component';
 import { LoaderComponent } from './os/systems/nvos/loader/loader.component';
 import { InstallerComponent } from './os/systems/nvos/installer/installer.component';
+import { SettingsComponent } from './os/systems/nvos/apps/settings/settings.component';
+import { TaskmanagerComponent } from './os/systems/nvos/apps/taskmanager/taskmanager.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { InstallerComponent } from './os/systems/nvos/installer/installer.compon
     LoadComponent,
     NvosComponent,
     LoaderComponent,
-    InstallerComponent
+    InstallerComponent,
+    SettingsComponent,
+    TaskmanagerComponent
   ],
   imports: [
     BrowserModule,

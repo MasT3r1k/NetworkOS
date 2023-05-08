@@ -22,7 +22,7 @@ export class OsComponent implements OnInit {
     let systemParam = this.route.snapshot.paramMap.get('system');
     this.system = systemParam as valid_systems;
     if (!Grub.GetSystems()[systemParam as valid_systems]) {
-      console.log("[Error] System " + systemParam + " is not exists.")
+      console.error("[Error] System " + systemParam + " is not exists.")
       this.router.navigate(["/"])
     }else{
       this.system = systemParam as valid_systems;

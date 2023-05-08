@@ -1,0 +1,218 @@
+.screen {
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.screen > .desktop {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    align-content: flex-start;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.screen > .desktop .item {
+    width: 72px;
+    height: 72px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    color: #eee;
+    text-shadow: 0px 0px 16px #000;
+    margin: 6px;
+    user-select: none;
+    text-align: center;
+}
+
+.screen > .desktop .item:not(.empty) {
+    cursor: pointer;
+}
+
+.screen > .desktop .item:not(.empty):hover {
+    background-color: rgba(70, 70, 70, .24);
+}
+
+.screen > .desktop .item img {
+    width: 40px;
+    height: 40px;
+}
+
+.screen > .desktop > .windows {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.screen > .desktop > .windows > div > div:not(.window), 
+.screen > .desktop > .windows > div > .window.hidden,
+.screen > .taskbar > .left .item.disabled {
+    display: none;
+    pointer-events: none;
+    opacity: 0;
+    font-size: 0px;
+}
+
+.screen > .desktop > .windows > div > .window {
+    position: absolute;
+    pointer-events: all;
+    transform: translate(-50%, -50%);
+    z-index: 50;
+    top: 50%;
+    left: 50%;
+    background-color: #222;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px, rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    transition: width .3s, height .3s;
+    color: #aaa;
+}
+
+.screen > .desktop > .windows > div > .window.maximaze {
+    width: 100%!important;
+    height: 100%!important;
+}
+
+.screen > .desktop > .windows > div > .window.minimaze {
+    width: 0%!important;
+    height: 100%!important;
+    transform: translate(-50%, 200%);
+}
+
+.screen > .desktop > .windows > div > .window.minimaze > .window-header .buttons {
+    display: none;
+}
+
+
+.screen > .desktop > .windows > div > .window > .window-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #151515;
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+    cursor: move;
+}
+
+.screen > .desktop > .windows > div > .window > .window-header .title {
+    padding: 4px 16px;
+    color: #fff;
+    font-size: 20px;
+    user-select: none;
+}
+
+.screen > .desktop > .windows >div > .window > .window-header .buttons {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    border-top-right-radius: inherit;
+}
+
+.screen > .desktop > .windows >div > .window > .window-header .buttons .btn {
+    font-size: 25px;
+    width: 42px;
+    height: 42px;
+    color: #ccc;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+}
+
+.screen > .desktop > .windows >div > .window > .window-header .buttons .btn:first-child {
+    border-top-right-radius: inherit;
+}
+
+.screen > .desktop > .windows >div > .window > .window-header .buttons .btn:hover {
+    background-color: rgba(70, 70, 70, 0.24);
+}
+
+.screen > .desktop > .windows >div > .window > .window-header .buttons .btn.close:hover {
+    background-color: rgba(180, 10, 10, 0.24);
+}
+
+
+.screen > .taskbar {
+    width: 100%;
+    position: relative;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 48px;
+    min-height: 48px;
+    background-color: #222;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    color: #ccc;
+    border-top: 1px solid #323232;
+}
+
+.screen > .taskbar > div {
+    display: flex;
+    flex-direction: row;
+}
+
+.screen > .taskbar > .left .item {
+    width: 42px;
+    height: 42px;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 8px;
+    margin: 0 8px;
+    transition: all .3s;
+}
+
+.screen > .taskbar > .left .item:not(.search):hover {
+    background-color: rgba(56, 56, 56, .75);
+}
+
+.screen > .taskbar > .left .item.search {
+    width: 300px;
+    position: relative;
+}
+
+.screen > .taskbar > .left .item.search input {
+    background-color: hsl(228 6% 32.5%/.24);
+    border: 1px solid #383838;
+    border-radius: 4rem;
+    padding: 8px 16px;
+    padding-left: 32px;
+    width: 100%;
+    color: #aaa;
+}
+
+.screen > .taskbar > .left .item.search i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 10px;
+    font-size: 16px;
+    color: #a7a7a7;
+}
+
+.screen > .taskbar > .left .item.search input:focus {
+    outline: none;
+}
+
+.screen > .taskbar > .left .item.app img {
+    width: 32px;
+    height: 32px;
+}
+
+
+.screen > .taskbar > .right {
+    padding: 0 16px;
+}
