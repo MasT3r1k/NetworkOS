@@ -8,4 +8,7 @@ import { ApplicationManager } from '../manager';
 })
 export class TaskmanagerComponent {
   processes = ApplicationManager.processes;
+  public getProcesses(pro: ApplicationManager.Process[], boolean: boolean) {
+    return pro.filter(a => a.hidden == boolean)
+  }
 }

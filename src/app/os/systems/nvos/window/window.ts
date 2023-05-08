@@ -104,8 +104,6 @@ export class WindowApp implements App {
             if (((windowA.offsetLeft as number) - pos1) > windowA.offsetWidth / 2 && ((windowA.offsetLeft as number) - pos1) + windowA.offsetWidth / 2 < desktop.clientWidth) {
                 windowA.style.left = ((windowA.offsetLeft as number) - pos1) + 'px';
             }
-            console.log(desktop)
-            console.log(windowA)
         }
 
         desktop.onmouseup = function() {

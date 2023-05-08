@@ -1,9 +1,5 @@
-import { Type } from "@angular/core";
 import { appsConfig } from "../appsConfig";
 import { WindowApp } from "../window/window";
-
-type windowButtons = 'close' | 'maximize' | 'minimize';
-
 
 export namespace ApplicationManager {
     export let processes: Process[] = [];
@@ -17,27 +13,16 @@ export namespace ApplicationManager {
     export class Process {
         declare id: number;
         declare name: string;
-        declare component?: Type<any> | undefined;
-        declare loader?: Type<any> | undefined;
-        public buttons: Record<windowButtons, boolean> =  {
-            close: true, // DEFAULT: TRUE
-            maximize: true, // DEFAULT: TRUE
-            minimize: true, // DEFAULT: TRUE
-        };
         loaded: boolean = false;
         hidden: boolean = false;
         disabled: boolean = false;
         windows: WindowApp[] = [];
         maxWindows: number = 1;
         constructor(name: string) {
-            this.id = processes.length;
+            this.id = processes.length as number;
             this.name = name;
         }
     
-        setButtons(btns: windowButtons, boolean: boolean): void {
-            this.buttons[btns] = boolean;
-        }
-
     
         disable(): void {
             this.disabled = true;
@@ -45,6 +30,9 @@ export namespace ApplicationManager {
 
         closeProcess(): void {
             processes.splice(this.id, 1);
+            processes.filter(_ => _.id > this.id).forEach((process) => {
+                process.id -= 1;
+            });
         }
     }
 

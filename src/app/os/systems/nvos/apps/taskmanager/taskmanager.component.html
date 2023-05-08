@@ -1,5 +1,10 @@
-<h1>Spuštěné procesy:</h1>
+<h1>Spuštěné aplikace ({{ getProcesses(processes, false).length }}):</h1>
 
-<div *ngFor="let process of processes">
+<div *ngFor="let process of getProcesses(processes, false)">
+    <p>{{ process.name }}</p>
+</div>
+
+<h1>Procesy na pozadí ({{ getProcesses(processes, true).length }}) :</h1>
+<div *ngFor="let process of getProcesses(processes, true)">
     <p>{{ process.name }}</p>
 </div>
