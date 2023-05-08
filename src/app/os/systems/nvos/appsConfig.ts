@@ -20,16 +20,28 @@ class App implements appConfig {
     declare name: string;
     Windows: number[] = [];
     maxWindows: number = 1;
+    hidden: boolean = false;
     
-    constructor(id: string,name: string, component: Type<any>, loader: Type<any>) {
+    constructor(id: string, name: string, hidden?:boolean, component?: Type<any>, loader?: Type<any>) {
         this.id = id;
-        this.component = component;
-        this.loader = loader;
+        if (component) {
+            this.component = component;
+        }
+        if (loader) {
+            this.loader = loader;
+        }
+        if (hidden) {
+            this.hidden = hidden;
+        }
         this.name = name;
     }
 }
 
 export let appsConfig: Record<string, App> = {
-    Settings: new App('Settings', 'Nastavení', SettingsComponent, SettingsLoader),
-    TaskManager: new App('TaskManager', 'Správce úloh', TaskmanagerComponent, TaskManagerLoader)
+    Settings: new App('Settings', 'Nastavení', false, SettingsComponent, SettingsLoader),
+    TaskManager: new App('TaskManager', 'Správce úloh', false, TaskmanagerComponent, TaskManagerLoader),
+    NetworkTime: new App('NetworkTime', 'Správa času a datumu systému', true),
+    NetworkNotifications: new App('NetworkNotifications', 'Správa oznámení systému', true),
+    NetworkSearch: new App('NetworkSearch', 'Vyhledávání v systému', true),
+    NetworkDiskManager: new App('NetworkDiskManager', 'Správa disků v zařízení', true)
 };

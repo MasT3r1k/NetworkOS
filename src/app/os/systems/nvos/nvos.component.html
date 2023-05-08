@@ -7,7 +7,7 @@
             <span *ngIf="!appsConfig?.[item.app]?.name && item.app">{{ item.app }}</span>
         </div>
         <div class="windows">
-            <div *ngFor="let process of ApplicationManager.processes;index as processIndex">
+            <div [ngClass]="{hidden: process.hidden}" *ngFor="let process of ApplicationManager.processes;index as processIndex">
                 <div [ngClass]="{window: !window.disabled, maximaze: window.maximazed, minimaze: window.minimazed, hidden: window.hidden}" *ngFor="let window of process.windows;index as index;" [ngStyle]="{width: window.width + 'px', height: window.height + 'px', borderRadius: window.borderRadius + 'px'}" (click)="ApplicationManager.addMainProcess(processIndex, index)" [attr.index]="getZIndex(process.name, index)">
                     <div class="window-header" (mousedown)="window.move($event)">
                         <div class="title">{{ window.title }}</div>
@@ -36,7 +36,7 @@
             <div class="item">
                 <i class="fa-regular fa-browsers"></i>
             </div>
-            <div [ngClass]="{item: true, app: true, disabled: process.disabled == true}" *ngFor="let process of ApplicationManager.processes" (click)="(process.windows.length > 1) ? '' : process.windows[0].minimaze()" >
+            <div [ngClass]="{item: true, app: true, disabled: process.disabled == true || process.hidden == true}" *ngFor="let process of ApplicationManager.processes" (click)="(process.windows.length > 1) ? '' : process.windows[0].minimaze()" >
                 <img src="/assets/nvos/apps/{{ process.name }}.png" alt="">
             </div>
         </div>

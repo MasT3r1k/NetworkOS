@@ -10,6 +10,8 @@ import { ApplicationManager } from './apps/manager';
 })
 export class NvosComponent implements OnInit {
 
+  public defaultProcesses = ['NetworkTime', 'NetworkNotifications', 'NetworkSearch', 'NetworkDiskManager'];
+
   public items: any[] = [];
   BiosApi = BiosApi;
   public time = BiosApi.getTime();
@@ -36,6 +38,9 @@ export class NvosComponent implements OnInit {
       this.ApplicationManager = ApplicationManager;
     });
 
+    this.defaultProcesses.forEach(process => {
+      ApplicationManager.runProcess(process);
+    })
   }
 
   // public closeApp(app: string) {

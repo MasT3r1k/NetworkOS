@@ -40,6 +40,15 @@ class CalendarClass {
     public getSeconds = (): string | number => {
         return Utils.addZeros(this.time.getSeconds(), 2);
     }
+
+    public getCalendar = (): Record<string, any> => {
+        //! TODO: Work in Progress 
+        return {
+            rows: 5,  // Rows of days in calendar
+            data: [[], [], [], [], []]  // Days per days every row 
+        }
+    }
+
 }
 
 export let Calendar: CalendarClass = new CalendarClass();

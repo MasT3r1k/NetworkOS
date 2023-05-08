@@ -98,10 +98,10 @@ export class WindowApp implements App {
             pos3 = e.clientX;
             pos4 = e.clientY;
 
-            if (((windowA.offsetTop as number) - pos2) > windowA.offsetHeight / 2 && ((windowA.offsetTop as number) - pos2) + windowA.offsetHeight / 2 < desktop.clientHeight) {
+            if (((windowA.offsetTop as number) - pos2) >= windowA.offsetHeight / 2 && ((windowA.offsetTop as number) - pos2) + windowA.offsetHeight / 2 <= desktop.clientHeight) {
                 windowA.style.top = ((windowA.offsetTop as number) - pos2) + 'px';
             }
-            if (((windowA.offsetLeft as number) - pos1) > windowA.offsetWidth / 2 && ((windowA.offsetLeft as number) - pos1) + windowA.offsetWidth / 2 < desktop.clientWidth) {
+            if (((windowA.offsetLeft as number) - pos1) >= windowA.offsetWidth / 2 && ((windowA.offsetLeft as number) - pos1) + windowA.offsetWidth / 2 <= desktop.clientWidth) {
                 windowA.style.left = ((windowA.offsetLeft as number) - pos1) + 'px';
             }
         }

@@ -43,31 +43,19 @@ export namespace ApplicationManager {
             if (!(existProcess.length == 1 && existProcess[0].windows.length >= existProcess[0].maxWindows)) {
                 let process = (existProcess.length == 0) ? new Process(config.id) : existProcess[0];
                 let windowA = new WindowApp(config.name, config?.loader);
-                windowA.component = config.component;
-                process.windows.push(windowA);
-                windowA.loaded = true;
+                process.hidden = config.hidden;
+                if (!process.hidden) {
+                    windowA.component = config.component;
+                    process.windows.push(windowA);
+                    windowA.loaded = true;
+                }
                 if (existProcess.length == 0) {
                     processes.push(process);
                     addMainProcess(process.id, (process.windows.length - 1));
                 }
             }
-            // let config = appsConfig[app];
-            // if (!config.maxWindows) { config.maxWindows = 1 }
-            // if (config.maxWindows && config.Windows.length >= config.maxWindows) {
-            // //   config.Windows.forEach(window => {
-            // //     if (processes.windows[window].minimazed) processes[window].minimaze();
-            // //   });
-            //   // TODO: select window
-            //   return;
-            // }
-            // let process = new Process(config.id);
-            // let window = new WindowApp(config.id, config.loader);
-            // window.component = config.component;
-            // process.windows.push(window)
-            // processes.push(process);
-            // window.loaded = true;
         }else{
-            console.error("[Error] Application is not installed.");
+            console.error(`[Error] ${app} is not installed.`);
         }
     }
 

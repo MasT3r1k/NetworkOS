@@ -77,6 +77,8 @@
 }
 
 .screen > .desktop > .windows > div > .window.maximaze {
+    top: 50%!important;
+    left: 50%!important;
     width: 100%!important;
     height: 100%!important;
 }
