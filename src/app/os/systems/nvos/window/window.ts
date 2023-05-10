@@ -4,7 +4,7 @@ import { NetworkPerms } from "../PermissionSystem";
 type windowButtons = 'close' | 'maximize' | 'minimize';
 
 interface App {
-    name: string;
+    process: string;
     title: string;
     width: number;
     height: number;
@@ -19,11 +19,10 @@ interface App {
     hasPerms: NetworkPerms.appPerms[];
     disabled: boolean;
     hidden: boolean;
-    moving: boolean;
 }
 
 export class WindowApp implements App {
-    declare name: string;
+    declare process: string;
     declare title: string;
     width: number = 1000;
     height: number = 600;
@@ -45,9 +44,9 @@ export class WindowApp implements App {
 
     public _temp: any = {};
 
-    constructor(name: string, loader?: Type<any>) {
-        this.name = name;
-        this.title = name;
+    constructor(process: string, title: string, loader?: Type<any>) {
+        this.process = process;
+        this.title = title;
         if (loader) this.loader = loader;
     }
 

@@ -1,18 +1,18 @@
 <div class="screen" [ngStyle]="{backgroundImage: 'url(' + '/assets/nvos/default-bg.jpg' + ')'}">
     <div class="desktop">
-        <div [ngClass]="{item: true, empty: item.app == ''}" *ngFor="let item of items;index as index" (dblclick)="ApplicationManager.runProcess(item.app)">
+        <div [ngClass]="{item: true, empty: item.app == ''}" *ngFor="let item of items;index as index" (dblclick)="Processes.createProcess(item.app, true)">
             <img *ngIf="item.app != ''" src="/assets/nvos/apps/{{ item.app }}.png" alt="" draggable="false" />
             
             <span *ngIf="appsConfig?.[item.app]?.name">{{ appsConfig[item.app].name }}</span>
             <span *ngIf="!appsConfig?.[item.app]?.name && item.app">{{ item.app }}</span>
         </div>
         <div class="windows">
-            <div [ngClass]="{hidden: process.hidden}" *ngFor="let process of ApplicationManager.processes;index as processIndex">
-                <div [ngClass]="{window: !window.disabled, maximaze: window.maximazed, minimaze: window.minimazed, hidden: window.hidden}" *ngFor="let window of process.windows;index as index;" [ngStyle]="{width: window.width + 'px', height: window.height + 'px', borderRadius: window.borderRadius + 'px'}" (click)="ApplicationManager.addMainProcess(processIndex, index)" [attr.index]="getZIndex(process.name, index)">
+            <div [ngClass]="{hidden: Processes.processes[process].hidden}" *ngFor="let process of Processes.list;index as processIndex">
+                <div [ngClass]="{window: !window.disabled, maximaze: window.maximazed, minimaze: window.minimazed, hidden: window.hidden}" *ngFor="let window of Processes.processes[process].windows;index as index;" [ngStyle]="{width: window.width + 'px', height: window.height + 'px', borderRadius: window.borderRadius + 'px'}">
                     <div class="window-header" (mousedown)="window.move($event)">
                         <div class="title">{{ window.title }}</div>
                         <div class="buttons">
-                            <div class="btn close" *ngIf="window.buttons.close" (click)="process.closeProcess()"><i class="fa-solid fa-xmark"></i></div>
+                            <div class="btn close" *ngIf="window.buttons.close" (click)="Processes.processes[process].closeProcess()"><i class="fa-solid fa-xmark"></i></div>
                             <div class="btn maximilaze" *ngIf="window.buttons.maximize" (click)="window.maximaze()"><i class="fa-regular fa-window-maximize"></i></div>
                             <div class="btn minimilaze" *ngIf="window.buttons.minimize" (click)="window.minimaze()"><i class="fa-regular fa-window-minimize"></i></div>
                         </div>
@@ -36,10 +36,12 @@
             <div class="item">
                 <i class="fa-regular fa-browsers"></i>
             </div>
-            <div [ngClass]="{item: true, app: true, disabled: process.disabled == true || process.hidden == true}" *ngFor="let process of ApplicationManager.processes" (click)="(process.windows.length > 1) ? '' : process.windows[0].minimaze()" >
-                <img src="/assets/nvos/apps/{{ process.name }}.png" alt="">
+            <div [ngClass]="{active: Processes.processes[process]?.windows?.[0]?.minimazed == false, item: true, app: true, disabled: Processes.processes[process].disabled == true || Processes.processes[process].hidden == true}" *ngFor="let process of Processes.list" (click)="(Processes.processes[process].windows.length > 1) ? '' : Processes.processes[process]?.windows?.[0]?.minimaze()" >
+                <img *ngIf="Processes.processes[process].disabled == false && Processes.processes[process].hidden == false" src="/assets/nvos/apps/{{ Processes.processes[process].name }}.png" alt="">
             </div>
         </div>
-        <div class="right">{{ time.hours }}:{{ time.minutes }}:{{ time.seconds }}</div>
+        <div class="right">
+            <div class="item clock" *ngIf="Processes.processes?.['NetworkTime']">{{ Processes.processes['NetworkTime'].data.hours }}:{{ Processes.processes['NetworkTime'].data.minutes }}:{{ Processes.processes['NetworkTime'].data.seconds }}</div>
+        </div>
     </div>
 </div>

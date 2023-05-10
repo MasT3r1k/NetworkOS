@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ApplicationManager } from '../manager';
+import { Processes } from '../../Process';
 
 @Component({
   selector: 'app-taskmanager',
@@ -7,8 +7,5 @@ import { ApplicationManager } from '../manager';
   styleUrls: ['./taskmanager.component.css']
 })
 export class TaskmanagerComponent {
-  processes = ApplicationManager.processes;
-  public getProcesses(pro: ApplicationManager.Process[], boolean: boolean) {
-    return pro.filter(a => a.hidden == boolean)
-  }
+  Process = Processes;
 }

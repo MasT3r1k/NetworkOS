@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { BiosApi } from 'src/app/bios/biosApi';
 import { appsConfig } from './appsConfig';
 import { ApplicationManager } from './apps/manager';
+import { module as NetworkTime } from "./apps/NetworkTime";
+import { Processes } from './Process';
 
 @Component({
   selector: 'app-nvos',
@@ -10,18 +12,14 @@ import { ApplicationManager } from './apps/manager';
 })
 export class NvosComponent implements OnInit {
 
-  public defaultProcesses = ['NetworkTime', 'NetworkNotifications', 'NetworkSearch', 'NetworkDiskManager'];
-
+  appsConfig = appsConfig;
   public items: any[] = [];
   BiosApi = BiosApi;
-  public time = BiosApi.getTime();
 
-  appsConfig = appsConfig;
-
-  ApplicationManager = ApplicationManager;
+  Processes = Processes;
 
   public getZIndex(app: string, window: number): number {
-    let process = ApplicationManager.processes.filter((value) => value.name == app)[0];
+    let process = Object.values(ApplicationManager.processes).filter((value) => value.name == app)[0];
     return Object.keys(ApplicationManager.processesOrder).length - ApplicationManager.processesOrder[process + '-' + window];
   }
 
@@ -32,16 +30,17 @@ export class NvosComponent implements OnInit {
 
     this.items[0].app = "Settings";
     this.items[1].app = "TaskManager";
+    this.items[2].app = "Terminal";
 
-    setInterval(() => {
-      this.time = BiosApi.getTime();
-      this.ApplicationManager = ApplicationManager;
-    });
 
-    this.defaultProcesses.forEach(process => {
-      ApplicationManager.runProcess(process);
-    })
+    this.startSystem();
+
   }
+
+  public startSystem() {
+    NetworkTime.run();
+  }
+
 
   // public closeApp(app: string) {
   //   if (appsConfig[app]) {

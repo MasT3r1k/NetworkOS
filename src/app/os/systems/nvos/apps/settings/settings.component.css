@@ -1,0 +1,155 @@
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #151617;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #101011;
+}
+
+
+
+main
+{
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    position: relative;
+}
+
+.sidebar
+{
+    height: 100%;
+    width: 250px;
+    min-width: 250px;
+    max-width: 250px;
+    background-color: hsla(0, 0%, 0%, .25);
+}
+
+.sidebar ul
+{
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul label
+{
+    color: rgb(190, 195, 195);
+    margin: 4px 16px;
+}
+
+.sidebar ul li
+{
+    padding: 8px 16px;
+    margin: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.sidebar ul li:hover { background-color: hsla(217,7.6%,33.5%,0.16) }
+.sidebar ul li.active { background-color: #2999ed }
+.sidebar ul li.active:hover { background-color: #1f7bc1 }
+
+
+.content
+{
+    padding: 2rem;
+    width: calc(100% - 250px);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.content > div
+{
+    display: none;
+    pointer-events: none;
+}
+.content > div.active
+{
+    display: unset;
+    pointer-events: all;
+}
+
+h1
+{
+    margin-top: 0;
+}
+
+
+.display {
+    width: 375px;
+    height: 211px;
+    aspect-ratio: 16/9;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: relative;
+    border-radius: 8px;
+    box-shadow: rgba(170, 170, 170, 0.24) 0px 0px 8px;
+}
+
+.reset, .change
+{
+    position: absolute;
+    bottom: 0;
+    padding: .5rem 1.55rem;
+    border-radius: 6px;
+    box-shadow: 0 0 5px 2.5px #151617;
+    cursor: pointer;
+    user-select: none;
+}
+
+.info
+{
+    background-color: rgba(19, 24, 28, 0.72);
+    color: #fff;
+    width: fit-content;
+    padding: 1px 4px;
+    border-bottom-right-radius: 8px;
+    user-select: none;
+}
+
+.reset
+{
+    left: 25%;
+    transform: translate(-50%, 25%);
+    background-color: rgb(35,35,35);
+}
+
+.reset[disabled]
+{
+    cursor: not-allowed;
+    color: rgb(70, 70, 70);
+    background-color: rgb(14,16,18);
+}
+
+.change
+{
+    right: 25%;
+    background-color: hsl(206, 84%, 55%);
+    color: #fff;
+    transform: translate(50%, 25%);    
+}
+
+
+.backgrounds
+{
+    margin: -15px auto 0;
+    display: grid;
+    grid-template: 112.5px 112.5px / 200px 200px 200px;
+    gap: 10px;
+    height: 100%;
+}
+
+.backgrounds img
+{
+    width: 200px;
+    height: 112.5px;
+    border-radius: 4px;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-drag: none;
+}

@@ -1,5 +1,4 @@
 import { Calendar } from "../utils/calendarManager";
-import { Bios } from "./bios";
 
 export namespace BiosApi {
     export function getTime() {

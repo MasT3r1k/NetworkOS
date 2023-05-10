@@ -1,1 +1,28 @@
-<p>settings works!</p>
+<main>
+    <div class="sidebar">
+        <ul>
+            <label>Systém</label>
+            <li>Obrazovka</li>
+            <li>Vzhled</li>
+            <li>Zvuk</li>
+            <li>Oznámení</li>
+            <li>Uložiště</li>
+        </ul>
+    </div>
+    <div class="content">
+        <section>
+            <div class="row">
+
+                <div class="display screen" [ngStyle]="{backgroundImage: 'url(' + '/assets/nvos/default-bg.jpg' + ')'}">
+                    <div class="info">{{ screenInfo.width + " x " + screenInfo.height }}</div>
+                </div>
+            
+                <div class="backgrounds">
+                </div>
+            
+            </div>
+            
+            <hr color="#212121">
+        </section>
+    </div>
+</main>

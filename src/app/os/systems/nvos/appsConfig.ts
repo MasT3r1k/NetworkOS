@@ -3,6 +3,7 @@ import { SettingsComponent } from "./apps/settings/settings.component";
 import { LoaderComponent as SettingsLoader } from "./apps/settings/loader/loader.component";
 import { TaskmanagerComponent } from "./apps/taskmanager/taskmanager.component";
 import { LoaderComponent as TaskManagerLoader } from "./apps/taskmanager/loader/loader.component";
+import { TerminalComponent } from "./apps/terminal/terminal.component";
 
 interface appConfig {
     id: string;
@@ -13,7 +14,7 @@ interface appConfig {
     maxWindows: number;
 }
 
-class App implements appConfig {
+export class windowAppConfig implements appConfig {
     declare component: Type<any>;
     declare loader: Type<any>;
     declare id: string;
@@ -22,7 +23,7 @@ class App implements appConfig {
     maxWindows: number = 1;
     hidden: boolean = false;
     
-    constructor(id: string, name: string, hidden?:boolean, component?: Type<any>, loader?: Type<any>) {
+    constructor(id: string, name: string, hidden:boolean = false, component?: Type<any>, loader?: Type<any>) {
         this.id = id;
         if (component) {
             this.component = component;
@@ -37,11 +38,8 @@ class App implements appConfig {
     }
 }
 
-export let appsConfig: Record<string, App> = {
-    Settings: new App('Settings', 'Nastavení', false, SettingsComponent, SettingsLoader),
-    TaskManager: new App('TaskManager', 'Správce úloh', false, TaskmanagerComponent, TaskManagerLoader),
-    NetworkTime: new App('NetworkTime', 'Správa času a datumu systému', true),
-    NetworkNotifications: new App('NetworkNotifications', 'Správa oznámení systému', true),
-    NetworkSearch: new App('NetworkSearch', 'Vyhledávání v systému', true),
-    NetworkDiskManager: new App('NetworkDiskManager', 'Správa disků v zařízení', true)
+export let appsConfig: Record<string, windowAppConfig> = {
+    Settings: new windowAppConfig('Settings', 'Nastavení', false, SettingsComponent, SettingsLoader),
+    TaskManager: new windowAppConfig('TaskManager', 'Správce úloh', false, TaskmanagerComponent, TaskManagerLoader),
+    Terminal: new windowAppConfig('Terminal', 'Terminál', false, TerminalComponent)
 };
