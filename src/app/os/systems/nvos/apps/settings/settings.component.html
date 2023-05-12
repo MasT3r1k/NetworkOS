@@ -2,17 +2,48 @@
     <div class="sidebar">
         <ul>
             <label>Systém</label>
-            <li>Obrazovka</li>
-            <li>Vzhled</li>
-            <li>Zvuk</li>
-            <li>Oznámení</li>
-            <li>Uložiště</li>
+            <li [ngClass]="{active: active == 0}" (click)="active = 0">
+                <i class="fa-regular fa-display"></i>
+                Obrazovka
+            </li>
+            <li [ngClass]="{active: active == 1}" (click)="active = 1">
+                <i class="fa-solid fa-paintbrush-fine"></i>
+                Vzhled
+            </li>
+            <li [ngClass]="{active: active == 2}" (click)="active = 2">
+                <i class="fa-solid fa-volume"></i>
+                Zvuk
+            </li>
+            <li [ngClass]="{active: active == 3}" (click)="active = 3">
+                <i class="fa-solid fa-bell"></i>
+                Oznámení
+            </li>
+            <li [ngClass]="{active: active == 4}" (click)="active = 4">
+                <i class="fa-solid fa-hard-drive"></i>
+                Uložiště
+            </li>
+            <li [ngClass]="{active: active == 5}" (click)="active = 5">
+                <i class="fa-solid fa-users"></i>
+                Uživatelé
+            </li>
+            <li [ngClass]="{active: active == 6}" (click)="active = 6">
+                <i class="fa-solid fa-language"></i>
+                Jazyk
+            </li>
+            <li [ngClass]="{active: active == 7}" (click)="active = 7">
+                <i class="fa-solid fa-shield-halved"></i>
+                Aktualizace systému
+            </li>
+            <li [ngClass]="{active: active == 8}" (click)="active = 8">
+                <i class="fa-solid fa-planet-moon"></i>
+                O systému
+            </li>
         </ul>
     </div>
     <div class="content">
-        <section>
+        <section *ngIf="active == 0">
+            <h1>Obrazovka</h1>
             <div class="row">
-
                 <div class="display screen" [ngStyle]="{backgroundImage: 'url(' + '/assets/nvos/default-bg.jpg' + ')'}">
                     <div class="info">{{ screenInfo.width + " x " + screenInfo.height }}</div>
                 </div>
@@ -23,6 +54,43 @@
             </div>
             
             <hr color="#212121">
+        </section>
+        <section *ngIf="active == 1">
+            <h1>Vzhled</h1>
+            <div class="row">
+                <div class="theme" [class.active]="device.theme == 'dark'" (click)="device.theme = 'dark'">
+                    <div class="title">Tmavý režim
+                        <div class="active" [hidden]="device.theme == 'dark'"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M470.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L192 338.7 425.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg> Aktivováno</div>
+                    </div>
+                    <div class="window dark">
+                    </div>
+                    <div class="info">
+                        <p>Kliknutím vybereš motiv</p>
+                    </div>
+                </div>
+            
+                <div class="theme" [class.active]="device.theme == 'light'" (click)="device.theme = 'light'">
+                    <div class="title">Světlý režim
+                        <div class="active" [hidden]="device.theme == 'light'"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M470.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L192 338.7 425.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg> Aktivováno</div>
+                    </div>
+                    <div class="window light">
+                    </div>
+                    <div class="info">
+                        <p>Kliknutím vybereš motiv</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section *ngIf="active == 3">
+            <h1>Oznámení</h1>
+            <p *ngIf="!Processes.list.includes('NetworkNotifications')">Nepodařilo se načíst proces Správa oznámení. Je nám líto, že máte tyto potíže :(</p>
+            <hr color="#212121">
+        </section>
+        <section *ngIf="active == 5">
+            <h1>Uživatelé</h1>
+            <div *ngFor="let user of device.users">
+                {{ user }}
+            </div>
         </section>
     </div>
 </main>

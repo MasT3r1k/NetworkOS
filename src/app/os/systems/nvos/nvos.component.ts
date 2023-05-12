@@ -4,6 +4,7 @@ import { appsConfig } from './appsConfig';
 import { ApplicationManager } from './apps/manager';
 import { module as NetworkTime } from "./apps/NetworkTime";
 import { Processes } from './Process';
+import { WindowApp, WindowOrder, WindowActive, unActiveWindow } from './window/window';
 
 @Component({
   selector: 'app-nvos',
@@ -17,6 +18,8 @@ export class NvosComponent implements OnInit {
   BiosApi = BiosApi;
 
   Processes = Processes;
+  WindowActive = WindowActive;
+  unActiveWindow = unActiveWindow;
 
   public getZIndex(app: string, window: number): number {
     let process = Object.values(ApplicationManager.processes).filter((value) => value.name == app)[0];
@@ -37,43 +40,12 @@ export class NvosComponent implements OnInit {
 
   }
 
+  public getIndex(window: WindowApp) {
+    return WindowOrder.indexOf(window);
+  }
+
   public startSystem() {
     NetworkTime.run();
   }
 
-
-  // public closeApp(app: string) {
-  //   if (appsConfig[app]) {
-  //     let config = appsConfig[app];
-  //     if (config.Windows.length > 0) {
-  //       config.Windows.forEach(index => {
-  //         this.windows[index].disable();
-  //       })
-  //       config.Windows = [];
-  //     }else{
-  //       console.error("[Error] Application is not running.");
-  //     }
-  //   }
-  // }
-
-  // public runApp(app: string) {
-  //   if (appsConfig[app]) {
-  //     let config = appsConfig[app];
-  //     if (!config.maxWindows) { config.maxWindows = 1 }
-  //     if (config.maxWindows && config.Windows.length >= config.maxWindows) {
-  //       config.Windows.forEach(window => {
-  //         if (this.windows[window].minimazed) this.windows[window].minimaze();
-  //       });
-  //       // TODO: select window
-  //       return;
-  //     }
-  //     let window = new WindowApp(config.id, config.loader);
-  //     let index = this.windows.push(window);
-  //     window.component = config.component;
-  //     config.Windows?.push(index - 1);
-  //     window.loaded = true;
-  //   }else{
-  //     console.error("[Error] Application is not installed.");
-  //   }
-  // }
 }

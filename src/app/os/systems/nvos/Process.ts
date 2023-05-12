@@ -24,7 +24,20 @@ export namespace Processes {
         updateInterval: any;
 
         constructor(name: string, autorun: boolean = true) {
-            if (list.includes(name) || processes?.[name]) return;
+            if (list.includes(name) && processes?.[name])  {
+                let process = processes[name];
+                let config = appsConfig?.[name];
+                if (config?.component && process.windows.length < process.maxWindows) {
+                    process.openWindow(config.component, config.loader)
+                }else{
+                    if (process.windows.length > 0) {
+                        if (process.windows[0].minimazed) {
+                            process.windows[0].minimaze();
+                        }
+                    }
+                }
+                return;
+            }
             this.name = name;
             list.push(this.name);
 

@@ -21,6 +21,13 @@ interface App {
     hidden: boolean;
 }
 
+export let WindowOrder: WindowApp[] = [];
+export let WindowActive: WindowApp | null = null;
+
+export function unActiveWindow() {
+    WindowActive = null;
+}
+
 export class WindowApp implements App {
     declare process: string;
     declare title: string;
@@ -48,6 +55,8 @@ export class WindowApp implements App {
         this.process = process;
         this.title = title;
         if (loader) this.loader = loader;
+        WindowOrder.push(this);
+        WindowActive = this;
     }
 
     setTitle(title: string): void {
@@ -76,20 +85,29 @@ export class WindowApp implements App {
         }
     }
 
+    activeWindow(): void {
+        WindowOrder.splice(WindowOrder.indexOf(this), 1);
+        WindowOrder.push(this);
+        WindowActive = this;
+    }
+
     move(event: MouseEvent): void {
         let pos1 = 0, pos2 = 0, pos3 = event.clientX, pos4 = event.clientY;
         let windowA = event.target as HTMLBaseElement;
         let desktop = event.target as HTMLBaseElement;
-
+        if (!windowA || !desktop) return;
         while (windowA.className !== 'window') {
             windowA = windowA.offsetParent as HTMLBaseElement;
         }
         while (desktop.className !== 'desktop') {
             desktop = desktop.offsetParent as HTMLBaseElement;
         }
+        
 
         desktop.onmousemove = function(e) {
             e.preventDefault();
+
+            if (!windowA.classList.contains('moving')) { windowA.classList.add("moving"); }
 
             pos1 = pos3 - e.clientX;
             pos2 = pos4 - e.clientY;
@@ -106,6 +124,7 @@ export class WindowApp implements App {
         }
 
         desktop.onmouseup = function() {
+            if (windowA.classList.contains('moving')) { windowA.classList.remove("moving"); }
             desktop.onmouseup = null;
             desktop.onmousemove = null;
         }

@@ -1,7 +1,43 @@
+.options {
+    display: flex;
+    flex-direction: row;
+    padding: 8px;
+}
+
+.options .option {
+    margin: 0 8px;
+    padding: 4px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.options .option:hover {
+    background-color: hsla(217,7.6%,33.5%,0.16);
+}
+
+.options .option.active {
+    background-color: hsla(217,7.6%,33.5%,0.24);
+}
+
 section {
     padding: 2rem;
 }
 
 section h1 {
     color: #fff;
+}
+
+.proces {
+    margin: 8px 0;
+    color: #ccc;
+    padding: 4px 8px;
+    cursor: pointer;
+}
+
+.proces.active {
+    background-color: #111;
+}
+
+.btn {
+    cursor: pointer;
 }

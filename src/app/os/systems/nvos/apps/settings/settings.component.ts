@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { fromEvent } from 'rxjs/internal/observable/fromEvent';
 import { debounceTime } from 'rxjs/operators';
+import { Processes } from '../../Process';
+import { device } from '../../system';
 
 @Component({
   selector: 'app-settings',
@@ -14,6 +16,8 @@ export class SettingsComponent implements OnInit {
     width: 0,
     height: 0
   };
+  device = device;
+  Processes = Processes;
 
   ngOnInit(): void {
     function windowResize()

@@ -1,6 +1,7 @@
 import { Processes } from "../Process";
 import { BiosApi } from "../../../../bios/biosApi";
 
+
 export let module = {
     name: "NetworkTime",
     windows: [],
@@ -26,3 +27,4 @@ export let module = {
         process.run();
     }
 }
+
