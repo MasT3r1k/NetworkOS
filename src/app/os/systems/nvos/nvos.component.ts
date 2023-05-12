@@ -4,7 +4,8 @@ import { appsConfig } from './appsConfig';
 import { ApplicationManager } from './apps/manager';
 import { module as NetworkTime } from "./apps/NetworkTime";
 import { Processes } from './Process';
-import { WindowApp, WindowOrder, WindowActive, unActiveWindow } from './window/window';
+import { WindowApp, WindowOrder, WindowActive, unActiveWindow, moving } from './window/window';
+import { Selecting } from './Selecting';
 
 @Component({
   selector: 'app-nvos',
@@ -20,6 +21,8 @@ export class NvosComponent implements OnInit {
   Processes = Processes;
   WindowActive = WindowActive;
   unActiveWindow = unActiveWindow;
+  DesktopSelector = Selecting.DesktopSelector;
+  WindowMoving = moving;
 
   public getZIndex(app: string, window: number): number {
     let process = Object.values(ApplicationManager.processes).filter((value) => value.name == app)[0];
@@ -41,7 +44,7 @@ export class NvosComponent implements OnInit {
   }
 
   public getIndex(window: WindowApp) {
-    return WindowOrder.indexOf(window);
+    return 6 + WindowOrder.indexOf(window);
   }
 
   public startSystem() {

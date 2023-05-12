@@ -23,6 +23,14 @@ interface App {
 
 export let WindowOrder: WindowApp[] = [];
 export let WindowActive: WindowApp | null = null;
+class Mover {
+    public status: boolean = false;
+    constructor() {}
+    public toggle(boolean: boolean) {
+        this.status = boolean;
+    }
+}
+export let moving = new Mover();
 
 export function unActiveWindow() {
     WindowActive = null;
@@ -47,7 +55,6 @@ export class WindowApp implements App {
     minimazed: boolean = false;
     hidden: boolean = false;
     hasPerms: NetworkPerms.appPerms[] = [];
-    moving: boolean = false;
 
     public _temp: any = {};
 
@@ -92,6 +99,7 @@ export class WindowApp implements App {
     }
 
     move(event: MouseEvent): void {
+        moving.toggle(true);
         let pos1 = 0, pos2 = 0, pos3 = event.clientX, pos4 = event.clientY;
         let windowA = event.target as HTMLBaseElement;
         let desktop = event.target as HTMLBaseElement;
@@ -102,12 +110,13 @@ export class WindowApp implements App {
         while (desktop.className !== 'desktop') {
             desktop = desktop.offsetParent as HTMLBaseElement;
         }
+
         
 
         desktop.onmousemove = function(e) {
             e.preventDefault();
 
-            if (!windowA.classList.contains('moving')) { windowA.classList.add("moving"); }
+            if (!moving.status) { moving.toggle(true) }
 
             pos1 = pos3 - e.clientX;
             pos2 = pos4 - e.clientY;
@@ -124,11 +133,12 @@ export class WindowApp implements App {
         }
 
         desktop.onmouseup = function() {
-            if (windowA.classList.contains('moving')) { windowA.classList.remove("moving"); }
+            if (moving.status) { moving.toggle(false); }
             desktop.onmouseup = null;
             desktop.onmousemove = null;
         }
     }
+    
 
     disable(): void {
         this.disabled = true;

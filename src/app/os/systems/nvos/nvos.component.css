@@ -17,6 +17,20 @@
     flex-wrap: wrap;
 }
 
+.screen > .desktop > .selectingArea {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 3;
+}
+
+.screen > .desktop > .selectingArea .selector {
+    position: absolute;
+    background-color: rgba(41, 153, 237, .48);
+    border: 1px solid rgb(41, 153, 237);
+    z-index: 5;
+}
+
 .screen > .desktop .item {
     width: 72px;
     height: 72px;
@@ -29,10 +43,12 @@
     margin: 6px;
     user-select: none;
     text-align: center;
+    z-index: 0;
 }
 
 .screen > .desktop .item:not(.empty) {
     cursor: pointer;
+    z-index: 5;
 }
 
 .screen > .desktop .item:not(.empty):hover {
@@ -51,12 +67,12 @@
     top: 0;
     left: 0;
     pointer-events: none;
-    z-index: 0;
+    z-index: 6;
 }
 
 .screen > .desktop > .windows > div > div.window.moving {
-    user-select: none;
-    transition: none;
+    user-select: none!important;
+    transition: none!important;
 }
 
 .screen > .desktop > .windows > div > div:not(.window), 
@@ -72,7 +88,6 @@
     position: absolute;
     pointer-events: all;
     transform: translate(-50%, -50%);
-    z-index: 50;
     top: 50%;
     left: 50%;
     background-color: #222;

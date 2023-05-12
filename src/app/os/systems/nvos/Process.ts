@@ -24,6 +24,7 @@ export namespace Processes {
         updateInterval: any;
 
         constructor(name: string, autorun: boolean = true) {
+            if (!name) return;
             if (list.includes(name) && processes?.[name])  {
                 let process = processes[name];
                 let config = appsConfig?.[name];
