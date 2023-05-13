@@ -19,8 +19,8 @@
 
         <div class="section" *ngIf="active == 1">
             <h1>Uživatelé</h1>
-            <div *ngFor="let user of device.users" [ngClass]="{user: true, active: device.activeUser == user}">
-                {{ user }} (Admin: {{ device.administrators.includes(user) ? 'Ano' : 'Ne' }})
+            <div *ngFor="let user of device.getUsers()" [ngClass]="{user: true, active: device.activeUser == user}">
+                {{ user }}
             </div>
         </div>
     </div>

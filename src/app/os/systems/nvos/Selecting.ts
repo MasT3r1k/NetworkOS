@@ -44,6 +44,12 @@ export namespace Selecting {
                 e.preventDefault();
                 if (!DesktopSelector.active) return;
                 DesktopSelector.secondPoint = {x: e.clientX, y: e.clientY};
+                // TODO: Select all items on desktop
+                let el = e.target as HTMLBaseElement;
+                let items = el.ownerDocument.querySelectorAll(".screen .desktop .item:not(.empty)");
+                items.forEach((_) => {
+                    
+                })
             }
 
             desktop.onmouseup = function() {

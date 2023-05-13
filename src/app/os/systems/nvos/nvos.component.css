@@ -96,6 +96,7 @@
     color: #aaa;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 .screen > .desktop > .windows > div > .window.maximaze {
@@ -164,7 +165,8 @@
 }
 
 .screen > .desktop > .windows > div > .window > .window-body {
-    height: 100%;
+    height: calc(100% - 42px);
+    max-height: calc(100% - 42px);
 }
 
 

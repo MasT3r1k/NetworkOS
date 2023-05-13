@@ -38,6 +38,19 @@
                 <i class="fa-solid fa-planet-moon"></i>
                 O systému
             </li>
+            <label>Dev mode</label>
+            <li [ngClass]="{active: active == 9}" (click)="active = 9">
+                <i class="fa-solid fa-hippo"></i>
+                Ovládací okno
+            </li>
+            <li [ngClass]="{active: active == 10}" (click)="active = 10">
+                <i class="fa-solid fa-cloud-arrow-down"></i>
+                Správa systému
+            </li>
+            <li [ngClass]="{active: active == 11}" (click)="active = 11">
+                <i class="fa-brands fa-github"></i>
+                Zdrojový kód systému
+            </li>
         </ul>
     </div>
     <div class="content">
@@ -88,9 +101,21 @@
         </section>
         <section *ngIf="active == 5">
             <h1>Uživatelé</h1>
-            <div *ngFor="let user of device.users">
+            <div *ngFor="let user of device.getUsers()">
                 {{ user }}
             </div>
+        </section>
+        <section *ngIf="active == 10">
+            <h1>
+                TEPRVE VE PŘÍPRAVĚ!
+            </h1>
+            <h1 style="opacity: .6">Správa systému</h1>
+            <p>Klikněte pro stáhnutí souboru systému.</p>
+            <p class="title">Nahravejte data systému ze souboru:</p>
+        </section>
+        <section *ngIf="active == 11">
+            <h1>Zdrojový kód systému</h1>
+            <a href="https://github.com/MasT3r1k/NetworkOS" target="_blank">Kliknutím na tento text otevřete v dalším okně zdrojový kód, celého systému, včetně BIOS a GRUB.</a>
         </section>
     </div>
 </main>
