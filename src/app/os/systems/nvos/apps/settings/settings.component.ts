@@ -3,6 +3,7 @@ import { fromEvent } from 'rxjs/internal/observable/fromEvent';
 import { debounceTime } from 'rxjs/operators';
 import { Processes } from '../../Process';
 import { device } from '../../system';
+import { NetworkLanguages } from '../../locale';
 
 @Component({
   selector: 'app-settings',
@@ -18,6 +19,7 @@ export class SettingsComponent implements OnInit {
   };
   device = device;
   Processes = Processes;
+  locale = NetworkLanguages;
 
   ngOnInit(): void {
     function windowResize()

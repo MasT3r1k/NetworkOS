@@ -1,4 +1,8 @@
 export namespace Utils {
+    export interface Coordinates {
+        x: number;
+        y: number;
+    }
     export function addZeros(num: number, length: number = 2) {
         if (length <= 0 || num.toString().length >= length) return num;
         let text = "";

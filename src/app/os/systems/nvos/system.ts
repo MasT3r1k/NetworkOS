@@ -1,3 +1,5 @@
+import { valid_languages } from "./locale";
+
 type themes = 'light' | 'dark';
 
 
@@ -22,8 +24,11 @@ class User {
 
 class Device {
     private users: User[] = [];
+    public deviceName: string = 'Network';
     public activeUser: string = 'admin';
     public theme: themes = 'dark';
+    public background: string = '/assets/nvos/default-bg.jpg';
+    public language: valid_languages = 'Czech';
     constructor() {
         let admin = new User('admin', true);
         this.users.push(admin);

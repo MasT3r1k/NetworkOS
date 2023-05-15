@@ -1,1 +1,29 @@
-<p>terminal works!</p>
+<main>
+    <div *ngFor="let line of Terminal.lines">
+        <div *ngIf="line.type == 'input'" class="input" style="display: inline-flex;">
+            <div class="user">
+                <span style="color: #89b265;">{{ device.activeUser }}</span>
+                <span style="color: #89b265;">@</span>
+                <span style="color: #89b265;">{{ device.deviceName }}</span>
+                <span style="color: #aaa;">:</span>
+                <span style="color: #439cec;">/</span>
+                <span style="color: #aaa;">$</span>
+            </div>
+            <div class="commander" [innerHTML]="line.text"></div>
+        </div>
+        <div *ngIf="line.type == 'info'" [innerHTML]="line.text"></div>
+    </div>
+    <div class="input" *ngIf="!Terminal.isProcessing">
+        <div class="user">
+            <span style="color: #89b265;">{{ device.activeUser }}</span>
+            <span style="color: #89b265;">@</span>
+            <span style="color: #89b265;">{{ device.deviceName }}</span>
+            <span style="color: #aaa;">:</span>
+            <span style="color: #439cec;">/</span>
+            <span style="color: #aaa;">$</span>
+        </div>
+        <div class="commander">
+            <input type="text" id="commander" autofocus (keydown)="TerminalCommander($event)">
+        </div>
+    </div>
+</main>

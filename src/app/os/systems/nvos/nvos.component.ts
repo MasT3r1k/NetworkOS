@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { BiosApi } from 'src/app/bios/biosApi';
 import { appsConfig } from './appsConfig';
-import { ApplicationManager } from './apps/manager';
 import { module as NetworkTime } from "./apps/NetworkTime";
 import { Processes } from './Process';
 import { WindowApp, WindowOrder, WindowActive, unActiveWindow, moving } from './window/window';
 import { Selecting } from './Selecting';
+import { context } from './contextMenu';
+import { device } from './system';
 
 @Component({
   selector: 'app-nvos',
@@ -23,15 +24,12 @@ export class NvosComponent implements OnInit {
   unActiveWindow = unActiveWindow;
   DesktopSelector = Selecting.DesktopSelector;
   WindowMoving = moving;
-
-  public getZIndex(app: string, window: number): number {
-    let process = Object.values(ApplicationManager.processes).filter((value) => value.name == app)[0];
-    return Object.keys(ApplicationManager.processesOrder).length - ApplicationManager.processesOrder[process + '-' + window];
-  }
+  ContextMenu = context;
+  device = device;
 
   ngOnInit() {
     for(let i = 0;i < 12*25;i++) {
-      this.items.push({ app: '' });
+      this.items.push({ app: '', text: '' });
     }
 
     this.items[0].app = "Settings";

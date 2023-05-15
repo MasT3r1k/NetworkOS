@@ -70,6 +70,14 @@
     z-index: 6;
 }
 
+.screen > .desktop > .contextmenu {
+    position: absolute;
+    background-color: #fff;
+    padding: 8px;
+    z-index: 500;
+    
+}
+
 .screen > .desktop > .windows > div > div.window.moving {
     user-select: none!important;
     transition: none!important;

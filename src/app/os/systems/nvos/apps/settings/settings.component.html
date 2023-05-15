@@ -57,7 +57,7 @@
         <section *ngIf="active == 0">
             <h1>Obrazovka</h1>
             <div class="row">
-                <div class="display screen" [ngStyle]="{backgroundImage: 'url(' + '/assets/nvos/default-bg.jpg' + ')'}">
+                <div class="display screen" [ngStyle]="{backgroundImage: 'url(' + device.background + ')'}">
                     <div class="info">{{ screenInfo.width + " x " + screenInfo.height }}</div>
                 </div>
             
@@ -94,16 +94,42 @@
                 </div>
             </div>
         </section>
+        <section *ngIf="active == 2">
+            <h1>Zvuk</h1>
+            <p>Připadám ti jako někdo, kdo dokáže ovládat tvojí hlasitost počítače? 🔊</p>
+        </section>
         <section *ngIf="active == 3">
             <h1>Oznámení</h1>
             <p *ngIf="!Processes.list.includes('NetworkNotifications')">Nepodařilo se načíst proces Správa oznámení. Je nám líto, že máte tyto potíže :(</p>
             <hr color="#212121">
+        </section>
+        <section *ngIf="active == 4">
+            <h1>Uložiště</h1>
+            <p>Samozřejmě, že máš neomezenou kapacitu. 💣</p>
+            <p>jk máš pouze dle velikosti své RAM a ber v potaz, že sám něco bereš xd</p>
         </section>
         <section *ngIf="active == 5">
             <h1>Uživatelé</h1>
             <div *ngFor="let user of device.getUsers()">
                 {{ user }}
             </div>
+        </section>
+        <section *ngIf="active == 6">
+            <h1>Jazyk</h1>
+            <div>
+                Aktuálně je nastavený {{ locale.getActiveLanguageDisplay() }}
+                <p (click)="locale.selectLanguage('English')">Klikni pro nastavení na angličtinu</p>
+            </div>
+        </section>
+        <section *ngIf="active == 7">
+            <h1>Aktualizace systému</h1>
+            <p>Musíš aktualizovat přes Terminál 🤷‍♂️</p>
+            <p>Nejsem zkurvené nefunkční windows, abych ti tu nabízel sračky lol</p>
+            <p>Takže hezky aktualizuj pomocí terminálu 👍</p>
+        </section>
+        <section *ngIf="active == 8">
+            <h1>O systému</h1>
+
         </section>
         <section *ngIf="active == 10">
             <h1>

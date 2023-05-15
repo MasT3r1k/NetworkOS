@@ -4,13 +4,12 @@ import { LoaderComponent as SettingsLoader } from "./apps/settings/loader/loader
 import { TaskmanagerComponent } from "./apps/taskmanager/taskmanager.component";
 import { LoaderComponent as TaskManagerLoader } from "./apps/taskmanager/loader/loader.component";
 import { TerminalComponent } from "./apps/terminal/terminal.component";
+import { NetworkLanguages } from "./locale";
 
 interface appConfig {
     id: string;
     component: Type<any>;
-    name: string;
     loader: Type<any>;
-    Windows: number[];
     maxWindows: number;
 }
 
@@ -18,12 +17,10 @@ export class windowAppConfig implements appConfig {
     declare component: Type<any>;
     declare loader: Type<any>;
     declare id: string;
-    declare name: string;
-    Windows: number[] = [];
-    maxWindows: number = 1;
+    public maxWindows: number = 1;
     hidden: boolean = false;
     
-    constructor(id: string, name: string, hidden:boolean = false, component?: Type<any>, loader?: Type<any>) {
+    constructor(id: string, hidden:boolean = false, component?: Type<any>, loader?: Type<any>) {
         this.id = id;
         if (component) {
             this.component = component;
@@ -34,12 +31,13 @@ export class windowAppConfig implements appConfig {
         if (hidden) {
             this.hidden = hidden;
         }
-        this.name = name;
     }
 }
 
 export let appsConfig: Record<string, windowAppConfig> = {
-    Settings: new windowAppConfig('Settings', 'Nastavení', false, SettingsComponent, SettingsLoader),
-    TaskManager: new windowAppConfig('TaskManager', 'Správce úloh', false, TaskmanagerComponent, TaskManagerLoader),
-    Terminal: new windowAppConfig('Terminal', 'Terminál', false, TerminalComponent)
+    Settings: new windowAppConfig('Settings', false, SettingsComponent, SettingsLoader),
+    TaskManager: new windowAppConfig('TaskManager', false, TaskmanagerComponent, TaskManagerLoader),
+    Terminal: new windowAppConfig('Terminal', false, TerminalComponent)
 };
+
+appsConfig['Terminal'].maxWindows = -1;

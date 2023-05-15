@@ -1,6 +1,7 @@
 import { Type } from "@angular/core";
 import { WindowApp } from "./window/window";
 import { appsConfig } from "./appsConfig";
+import { NetworkLanguages } from "./locale";
 
 export namespace Processes {
     export let list: string[] = [];
@@ -27,8 +28,9 @@ export namespace Processes {
             if (!name) return;
             if (list.includes(name) && processes?.[name])  {
                 let process = processes[name];
-                let config = appsConfig?.[name];
-                if (config?.component && process.windows.length < process.maxWindows) {
+                let config = appsConfig[process.name];
+                process.maxWindows = (config.maxWindows) ? config.maxWindows : 1;
+                if (config && config?.component && (process.maxWindows === -1 || process.windows.length < process.maxWindows)) {
                     process.openWindow(config.component, config.loader)
                 }else{
                     if (process.windows.length > 0) {
@@ -41,15 +43,17 @@ export namespace Processes {
             }
             this.name = name;
             list.push(this.name);
-
             processes[this.name] = this;
-
+            
             if (autorun == true) {
                 this.run();
             }
 
             let config = appsConfig?.[this.name];
-            if (config?.component && this.windows.length < this.maxWindows) {
+            if (config && config?.maxWindows != null) {
+                this.maxWindows = config.maxWindows as number;
+            }
+            if (config?.component && (this.maxWindows === -1 || this.windows.length < this.maxWindows)) {
                 this.openWindow(config.component, config.loader)
             }
 
@@ -78,8 +82,8 @@ export namespace Processes {
         }
 
         public openWindow(component: Type<any>, loader?: Type<any>) {
-            if (this.windows.length >= this.maxWindows) { return; }
-            let win = new WindowApp(this.name, this.name);
+            if (this.maxWindows != -1 && this.windows.length >= this.maxWindows) { return; }
+            let win = new WindowApp(this.name, (NetworkLanguages.locale[NetworkLanguages.getLanguage()]['data']['apps'][this.name]) ? NetworkLanguages.locale[NetworkLanguages.getLanguage()]['data']['apps'][this.name] : this.name);
             win.loadComponent(component);
             this.windows.push(win);
             win.loaded = true;

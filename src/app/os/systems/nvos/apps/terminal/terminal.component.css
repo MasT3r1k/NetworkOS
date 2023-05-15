@@ -1,0 +1,35 @@
+main {
+    user-select: none;
+    padding: 0 8px;
+}
+
+main > div {
+    margin: 4px 0;
+    white-space: break-spaces;
+}
+
+.input {
+    display: flex;
+    flex-direction: row;
+}
+
+.input .user {
+    display: inline-flex;
+}
+
+.input .commander {
+    width: 100%;
+}
+
+.input .commander input {
+    background-color: transparent;
+    border: 0;
+    color: #aaa;
+    width: 100%;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.input .commander input:focus {
+    outline: 0;
+}

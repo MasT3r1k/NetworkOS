@@ -1,5 +1,6 @@
 import { Type } from "@angular/core";
 import { NetworkPerms } from "../PermissionSystem";
+import { Processes } from "../Process";
 
 type windowButtons = 'close' | 'maximize' | 'minimize';
 
@@ -55,6 +56,7 @@ export class WindowApp implements App {
     minimazed: boolean = false;
     hidden: boolean = false;
     hasPerms: NetworkPerms.appPerms[] = [];
+    declare ActivatingWindowFunc: Function;
 
     public _temp: any = {};
 
@@ -96,6 +98,16 @@ export class WindowApp implements App {
         WindowOrder.splice(WindowOrder.indexOf(this), 1);
         WindowOrder.push(this);
         WindowActive = this;
+        if (this.ActivatingWindowFunc) {
+            this.ActivatingWindowFunc()
+        }
+    }
+
+    closeWindow(): void {
+        Processes.processes[this.process].windows.splice(Processes.processes[this.process].windows.indexOf(this), 1);
+        if (Processes.processes[this.process].windows.length == 0) {
+            Processes.processes[this.process].closeProcess();
+        }
     }
 
     move(event: MouseEvent): void {

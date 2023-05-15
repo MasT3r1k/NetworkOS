@@ -44,6 +44,12 @@ a {
     color: inherit;
 }
 
+a.code {
+    padding: 2px;
+    background-color: #121212;
+    color: #fff;
+}
+
 .row
 {
     display: flex;

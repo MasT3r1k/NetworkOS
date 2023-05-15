@@ -1,13 +1,12 @@
-<div class="screen" [ngStyle]="{backgroundImage: 'url(' + '/assets/nvos/default-bg.jpg' + ')'}">
+<div class="screen" [ngStyle]="{backgroundImage: 'url(' + device.background + ')'}" (click)="ContextMenu.active = false" (contextmenu)="$event.preventDefault();ContextMenu.active = false">
     <div class="desktop">
         <div class="selectingArea" (mousedown)="DesktopSelector.activeSelector($event)">
             <div *ngIf="DesktopSelector.active" [ngClass]="{selector: true}" [ngStyle]="{top: DesktopSelector.GetY(true) + 'px', left: DesktopSelector.GetX(true) + 'px', width: DesktopSelector.getWidth() + 'px', height: DesktopSelector.getHeight() + 'px'}"></div>
         </div>
-        <div [ngClass]="{item: true, empty: item.app == ''}" *ngFor="let item of items;index as index" (dblclick)="Processes.createProcess(item.app, true)">
+        <div [ngClass]="{item: true, empty: item.app == ''}" *ngFor="let item of items;index as index" (dblclick)="Processes.createProcess(item.app, true)" (contextmenu)="ContextMenu.set({type: 'desktopItem', process: item.app}, $event)">
             <img *ngIf="item.app != ''" src="/assets/nvos/apps/{{ item.app }}.png" alt="" draggable="false" />
             
-            <span *ngIf="appsConfig?.[item.app]?.name">{{ appsConfig[item.app].name }}</span>
-            <span *ngIf="!appsConfig?.[item.app]?.name && item.app">{{ item.app }}</span>
+            <span>{{ (item.text) ? item.text : item.app  }}</span>
         </div>
         <div class="windows">
             <div [ngClass]="{hidden: Processes.processes[process].hidden}" *ngFor="let process of Processes.list;index as processIndex">
@@ -15,7 +14,7 @@
                     <div class="window-header" (mousedown)="window.move($event)">
                         <div class="title">{{ window.title }}</div>
                         <div class="buttons">
-                            <div class="btn close" *ngIf="window.buttons.close" (click)="Processes.processes[process].closeProcess()"><i class="fa-solid fa-xmark"></i></div>
+                            <div class="btn close" *ngIf="window.buttons.close" (click)="window.closeWindow()"><i class="fa-solid fa-xmark"></i></div>
                             <div class="btn maximilaze" *ngIf="window.buttons.maximize" (click)="window.maximaze()"><i class="fa-regular fa-window-maximize"></i></div>
                             <div class="btn minimilaze" *ngIf="window.buttons.minimize" (click)="window.minimaze()"><i class="fa-regular fa-window-minimize"></i></div>
                         </div>
@@ -24,6 +23,11 @@
                         <ng-component *ngIf="(window.loaded && window.component) || window.loader" [ngComponentOutlet]="(window.loaded) ? window.component : window.loader"></ng-component>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="contextmenu" *ngIf="ContextMenu.active" [ngStyle]="{top: ContextMenu.coordinates.y + 'px', left: ContextMenu.coordinates.x + 'px'}">
+            <div *ngFor="let item of ContextMenu.items" (click)="item.action()">
+                {{ item.text }}
             </div>
         </div>
     </div>
@@ -39,7 +43,7 @@
             <div class="item">
                 <i class="fa-regular fa-browsers"></i>
             </div>
-            <div [ngClass]="{active: Processes.processes[process]?.windows?.[0]?.minimazed == false, item: true, app: true, disabled: Processes.processes[process].disabled == true || Processes.processes[process].hidden == true}" *ngFor="let process of Processes.list" (click)="(Processes.processes[process].windows.length > 1) ? '' : Processes.processes[process]?.windows?.[0]?.minimaze()" >
+            <div [ngClass]="{active: Processes.processes[process]?.windows?.[0]?.minimazed == false, item: true, app: true, disabled: Processes.processes[process].disabled == true || Processes.processes[process].hidden == true}" *ngFor="let process of Processes.list" (click)="(Processes.processes[process].windows.length > 1) ? '' : Processes.processes[process].windows[0].minimaze()">
                 <img *ngIf="Processes.processes[process].disabled == false && Processes.processes[process].hidden == false" src="/assets/nvos/apps/{{ Processes.processes[process].name }}.png" alt="">
             </div>
         </div>
