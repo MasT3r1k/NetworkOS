@@ -62,15 +62,17 @@ export class NvosComponent implements OnInit {
   }
 
   public UserLoginToSystem() {
-    
+
     if (device.isUnlocked) return;
 
     let u = this.loginUser.value.username;
     let p = this.loginUser.value.password;
 
-    if (!u || !p) return;
+    if (u == undefined || p == undefined) return;
     if (!device.getUsers().includes(u as string)) return console.error("Username not found!");
-
+    if (!device.getUser(u)?.checkPassword(p)) return console.error("Password is wrong!")
+    device.isUnlocked = true;
+    device.setUser(u);
   }
 
 }

@@ -269,5 +269,89 @@
 
 .screen.logscreen {
     display: flex;
+    justify-content: center;
     align-items: center;
+}
+
+.screen.logscreen p {
+    margin: 0;
+}
+
+.screen.logscreen .login-items {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    display: inline-flex;
+    flex-direction: row-reverse;
+}
+
+.screen.logscreen .login-card {
+    width: 31rem;
+    background: #fff;
+    box-shadow: 0 3px 20px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    padding: 2rem;
+}
+
+.screen.logscreen .login-card h1 {
+    font-size: 48px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.screen.logscreen .login-card .form-group {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.screen.logscreen .login-card .form-group label {
+    display: inline-block;
+    margin-bottom: .5rem;
+}
+
+.screen.logscreen .login-card .form-group input {
+    display: block;
+    width: 100%;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.screen.logscreen .login-card .form-group input:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);
+  }
+
+.screen.logscreen .login-card .form-group input[type='submit'] {
+    background-color: #2999ed;
+    color: #fff;
+    border: 0;
+    outline: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 50rem;
+}
+
+.screen.logscreen .login-card .info {
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    line-height: 1.25;
+}
+
+.screen.logscreen .login-card .info p.login-title {
+    font-weight: bold;
+    font-size: 1.25rem;
 }

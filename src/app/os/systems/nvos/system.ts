@@ -5,7 +5,7 @@ type backgroundTypes = 'classic' | '3d';
 
 class User {
     declare name: string;
-    declare password: string;
+    private password: string = 'admin';
     private isAdmin: boolean = false;
     constructor(name: string, admin: boolean = false) {
         this.name = name;
@@ -16,10 +16,14 @@ class User {
         return this.isAdmin;
     }
 
-    makeAdmin() {
-        if (device.checkUser(device.activeUser)?.checkAdmin()) {
+    makeAdmin(): void {
+        if (device.getUser(device.activeUser)?.checkAdmin()) {
             this.isAdmin = true;
         }
+    }
+
+    checkPassword(password: string): boolean {
+        return (password == this.password) as boolean;
     }
 }
 
@@ -42,12 +46,17 @@ class Device {
 
     public getUsers(): string[] {
         let a: string[] = [];
-        this.users.forEach((u) => a.push(u.name));
+        this.users.forEach((u) => a.push(u.name.toLowerCase()));
         return a;
     }
 
-    public checkUser(name: string): User | null {
-        return this.users.filter(_ => _.name == name)?.[0] || null;
+    public getUser(user: string): User | null {
+        if (!this.checkUser(user.toLowerCase())) return null;
+        return this.users.filter(_ => _.name.toLowerCase() == user.toLowerCase())[0];
+    }
+
+    public checkUser(name: string): boolean {
+        return this.getUsers().includes(name.toLowerCase());
     }
 
     public addUser(name: string) {
