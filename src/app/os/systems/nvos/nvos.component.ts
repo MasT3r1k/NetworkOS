@@ -7,6 +7,12 @@ import { WindowApp, WindowOrder, WindowActive, unActiveWindow, moving } from './
 import { Selecting } from './Selecting';
 import { context } from './contextMenu';
 import { device } from './system';
+import { FormControl, FormGroup } from '@angular/forms';
+
+interface LoginForm {
+  username: FormControl<string>;
+  password: FormControl<string>;
+}
 
 @Component({
   selector: 'app-nvos',
@@ -18,6 +24,12 @@ export class NvosComponent implements OnInit {
   appsConfig = appsConfig;
   public items: any[] = [];
   BiosApi = BiosApi;
+
+  loginUser = new FormGroup<LoginForm>({
+    username: new FormControl('', {nonNullable: true}),
+    password: new FormControl('', {nonNullable: true})
+  })
+
 
   Processes = Processes;
   WindowActive = WindowActive;
@@ -47,6 +59,18 @@ export class NvosComponent implements OnInit {
 
   public startSystem() {
     NetworkTime.run();
+  }
+
+  public UserLoginToSystem() {
+    
+    if (device.isUnlocked) return;
+
+    let u = this.loginUser.value.username;
+    let p = this.loginUser.value.password;
+
+    if (!u || !p) return;
+    if (!device.getUsers().includes(u as string)) return console.error("Username not found!");
+
   }
 
 }

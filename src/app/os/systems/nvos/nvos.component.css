@@ -266,3 +266,8 @@
 .screen > .taskbar > .right {
     padding: 0 16px;
 }
+
+.screen.logscreen {
+    display: flex;
+    align-items: center;
+}

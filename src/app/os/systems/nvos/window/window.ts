@@ -111,6 +111,7 @@ export class WindowApp implements App {
     }
 
     move(event: MouseEvent): void {
+        if (this.maximazed) return;
         moving.toggle(true);
         let pos1 = 0, pos2 = 0, pos3 = event.clientX, pos4 = event.clientY;
         let windowA = event.target as HTMLBaseElement;
