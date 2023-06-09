@@ -8,6 +8,10 @@ import { Selecting } from './Selecting';
 import { context } from './contextMenu';
 import { device } from './system';
 import { FormControl, FormGroup } from '@angular/forms';
+import { fromEvent } from 'rxjs/internal/observable/fromEvent';
+import { debounceTime } from 'rxjs/operators';
+import { Utils } from 'src/app/utils/NVUtils';
+import { DiskManager } from 'src/app/utils/diskManager';
 
 interface LoginForm {
   username: FormControl<string>;
@@ -45,11 +49,30 @@ export class NvosComponent implements OnInit {
     }
 
     this.items[0].app = "Settings";
+    this.items[0].text = "Nastavení";
     this.items[1].app = "TaskManager";
+    this.items[1].text = "Správce úloh";
     this.items[2].app = "Terminal";
+    this.items[2].text = "Terminál";
 
 
     this.startSystem();
+
+    this.device.updateResolution(windowResize());
+    fromEvent(window, 'resize')
+    .pipe(debounceTime(200))
+    .subscribe(() => {
+      this.device.updateResolution(windowResize());
+    });
+
+    function windowResize()
+    {
+      let html = document.querySelector("html");
+      return {
+        width: html?.clientWidth || 0,
+        height: html?.clientHeight || 0
+      }
+    }
 
   }
 
@@ -59,6 +82,7 @@ export class NvosComponent implements OnInit {
 
   public startSystem() {
     NetworkTime.run();
+    DiskManager.Disk
   }
 
   public UserLoginToSystem() {
