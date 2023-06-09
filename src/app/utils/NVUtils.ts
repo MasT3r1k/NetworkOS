@@ -25,6 +25,21 @@ export namespace Utils {
         return (string == '' || string == '[]');
     }
 
+    export function testMaximumStorage() {
+        if (localStorage) {
+            var i: number = 0;
+            try {
+                // Test up to 10 MB
+                for (i = 250; i <= 10000; i += 250) {
+                    localStorage.setItem('test', new Array((i * 1024) + 1).join('a'));
+                }
+            } catch (e) {
+                localStorage.removeItem('test');
+                console.log('Maximum size: ' + (i - 250).toString());
+            }
+        }
+    }
+
     export class NVItems {
 
         constructor() {}

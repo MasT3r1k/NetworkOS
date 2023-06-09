@@ -11,6 +11,20 @@ class CalendarClass {
         }, 1000)
     }
 
+
+    public parseFormat = (format: string) => {
+        format = format.replace(/%h/g, this.getHours().toString())
+                        .replace(/%m/g, this.getMinutes().toString())
+                        .replace(/%s/g, this.getSeconds().toString())
+                        .replace(/%D/g, this.getDate().toString())
+                        .replace(/%M/g, this.getMonth().toString())
+                        .replace(/%YY/g, this.getFullYear().toString())            // ALl 4 digits
+
+                        .replace(/%Y/g, this.getFullYear().toString().slice(2, 4)) // Last 2 digits
+
+        return format;
+    }
+
     public getDays = (month: number, year?: number): number => {
         month = (month === 0) ? month = 1 : month;
         year = (year) ? year : this.getFullYear();

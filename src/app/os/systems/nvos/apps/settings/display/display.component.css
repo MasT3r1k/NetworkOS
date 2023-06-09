@@ -1,0 +1,71 @@
+.display {
+    width: 300px;
+    height: 168.75px;
+    aspect-ratio: 16/9;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: relative;
+    border-radius: 8px;
+    box-shadow: rgba(170, 170, 170, 0.24) 0px 0px 8px;
+    margin: 0 12px;
+}
+
+.display .info
+{
+    background-color: rgba(19, 24, 28, 0.72);
+    color: #fff;
+    width: fit-content;
+    padding: 1px 4px;
+    border-top-left-radius: inherit;
+    border-bottom-right-radius: inherit;
+    user-select: none;
+}
+
+.display .info span {
+    color: #ccc;
+}
+
+.backgrounds
+{
+    display: grid;
+    grid-template: 112.5px 112.5px / 200px 200px 200px;
+    gap: 10px;
+    height: 100%;
+    justify-content: center;
+}
+
+.backgrounds .background
+{
+    width: 200px;
+    height: 112.5px;
+    border-radius: 4px;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-drag: none;
+    position: relative;
+}
+
+.backgrounds .background .active
+{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    border-radius: 4px;
+    padding: 0 7px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 18px;
+    color: #58a6ff;
+    border: 1px solid #2999ed;
+    background-color: rgba(41, 152, 237, 0.16);
+    user-select: none;
+    display: inline-flex;
+}
+
+.backgrounds .background svg
+{
+    width: 13px;
+    margin-right: 4px;
+    fill: #58a6ff;
+}

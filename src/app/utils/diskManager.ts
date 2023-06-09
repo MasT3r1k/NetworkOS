@@ -54,9 +54,15 @@ export namespace DiskManager {
             this.folders = folders || [];
             this.health = health || 100;
         }
+    
+
 
         public calculateUsed(): void {
             
+        }
+
+        public usedStorage() {
+            return new Blob(Object.values(localStorage)).size;
         }
 
         public getFiles(dir: string): DiskFile[] {
@@ -69,11 +75,14 @@ export namespace DiskManager {
         }
 
         public createFile(name: string, dir: any, type: FileTypes): void {
-
             this.calculateUsed()
         }
 
-        public renameFile(name: string, dir: any, renameTo: string): void {
+        public checkFile(): void {
+
+        }
+
+        public renameFile(file: string, dir: any, renameTo: string): void {
 
             this.calculateUsed()
         }

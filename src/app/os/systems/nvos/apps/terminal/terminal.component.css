@@ -5,7 +5,7 @@ main {
 
 main > div {
     margin: 4px 0;
-    white-space: break-spaces;
+    white-space: pre;
 }
 
 .input {

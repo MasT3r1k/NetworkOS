@@ -1,0 +1,43 @@
+<section>
+    <h1>Vzhled</h1>
+    <div class="row">
+        <div class="theme" [class.active]="device.theme == 'dark'" (click)="device.theme = 'dark'">
+            <div class="title">Tmavý režim
+                <div class="active" [hidden]="device.theme == 'dark'"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M470.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L192 338.7 425.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg> Vybráno</div>
+            </div>
+            <div class="window dark">
+            </div>
+            <div class="info">
+                <p>Kliknutím vybereš motiv</p>
+            </div>
+        </div>
+    
+        <div class="theme" [class.active]="device.theme == 'light'" (click)="device.theme = 'light'">
+            <div class="title">Světlý režim
+                <div class="active" [hidden]="device.theme == 'light'"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M470.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L192 338.7 425.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg> Vybráno</div>
+            </div>
+            <div class="window light">
+            </div>
+            <div class="info">
+                <p>Kliknutím vybereš motiv</p>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <h1>Hlavní panel</h1>
+    <div class="row">
+        <p class="desc">Pozice hlavního panelu:</p>
+        <div class="select-full">
+            <div [ngClass]="{option: true, active: device.taskBar.position == 'top'}" (click)="device.taskBar.position = 'top'">Nahoře</div>
+            <div [ngClass]="{option: true, active: device.taskBar.position == 'bottom'}" (click)="device.taskBar.position = 'bottom'">Dole</div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <p class="desc">Formát času:</p>
+        <div class="select-full">
+            <div [ngClass]="{option: true, active: device.taskBar.timeFormat == option.format}" *ngFor="let option of taskBarTimeOptions" (click)="device.setTimeFormat(option.format)">{{ option.text }}</div>
+        </div>
+    </div>
+</section>

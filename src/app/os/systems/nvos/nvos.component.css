@@ -2,9 +2,12 @@
     display: flex;
     flex-direction: column;
     max-height: 100%;
-    background-position: center center;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: 100% 100%;
+}
+
+.screen.reverse {
+    flex-direction: column-reverse;
 }
 
 .screen > .desktop {
@@ -60,6 +63,10 @@
     height: 40px;
 }
 
+.screen > .desktop .item span {
+    word-break: break-word;
+}
+
 .screen > .desktop > .windows {
     position: absolute;
     height: 100%;
@@ -108,10 +115,11 @@
 }
 
 .screen > .desktop > .windows > div > .window.maximaze {
-    top: 50%!important;
-    left: 50%!important;
+    top: 0!important;
+    left: 0!important;
     width: 100%!important;
     height: 100%!important;
+    transform: translate(0, 0);
 }
 
 .screen > .desktop > .windows > div > .window.minimaze {
@@ -134,6 +142,9 @@
     border-top-left-radius: inherit;
     border-top-right-radius: inherit;
     cursor: move;
+    height: 42px;
+    min-height: 42px;
+    max-height: 42px;
 }
 
 .screen > .desktop > .windows > div > .window > .window-header .title {
@@ -175,6 +186,8 @@
 .screen > .desktop > .windows > div > .window > .window-body {
     height: calc(100% - 42px);
     max-height: calc(100% - 42px);
+    overflow: hidden;
+    overflow-y: auto;
 }
 
 
@@ -186,7 +199,7 @@
     right: 0;
     height: 48px;
     min-height: 48px;
-    background-color: #222;
+    background-color: rgba(34, 34, 34, 0.725);
     display: flex;
     flex-direction: row;
     justify-content: space-between;

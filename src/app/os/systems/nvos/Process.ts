@@ -29,7 +29,7 @@ export namespace Processes {
             if (list.includes(name) && processes?.[name])  {
                 let process = processes[name];
                 let config = appsConfig[process.name];
-                process.maxWindows = (config.maxWindows) ? config.maxWindows : 1;
+                if (config.maxWindows) { process.maxWindows = config.maxWindows; }
                 if (config && config?.component && (process.maxWindows === -1 || process.windows.length < process.maxWindows)) {
                     process.openWindow(config.component, config.loader)
                 }else{

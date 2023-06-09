@@ -1,0 +1,11 @@
+<h1>Zamykací obrazovka</h1>
+<div class="row" style="justify-content: center;">
+    <div class="display screen" [ngStyle]="{backgroundImage: 'url(' + device.backgroundLockscreen + ')'}"></div>
+</div>
+<hr color="#383838">
+<div class="backgrounds">
+    <div class="background" *ngFor="let bg of device.backgroundHistory">
+        <div class="active" *ngIf="device.backgroundLockscreen == bg"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M470.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L192 338.7 425.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg> Vybráno</div>
+        <img [src]="bg"  (click)="device.setLockscreenBackground(bg)" width="200px">
+    </div>
+</div>

@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css2?family=Livvic:wght@100;200;300;400;500;600;700;900&display=swap');
-@import url('https://site-assets.fontawesome.com/releases/v6.4.0/css/all.css');
+@import url('./fontawesome.css');
 
 *, *::after, *::before {
     box-sizing: border-box;
@@ -44,8 +44,10 @@ a {
     color: inherit;
 }
 
-a.code {
-    padding: 2px;
+pre {
+    display: inline;
+    padding: 4px;
+    border-radius: 4px;
     background-color: #121212;
     color: #fff;
 }

@@ -2,9 +2,9 @@
     <div *ngFor="let line of Terminal.lines">
         <div *ngIf="line.type == 'input'" class="input" style="display: inline-flex;">
             <div class="user">
-                <span style="color: #89b265;">{{ device.activeUser }}</span>
-                <span style="color: #89b265;">@</span>
-                <span style="color: #89b265;">{{ device.deviceName }}</span>
+                <span style="color: #3fb7f5;">{{ line.author }}</span>
+                <span style="color: #3fb7f5;">@</span>
+                <span style="color: #3fb7f5;">{{ device.deviceName }}</span>
                 <span style="color: #aaa;">:</span>
                 <span style="color: #439cec;">/</span>
                 <span style="color: #aaa;">$</span>
@@ -15,9 +15,9 @@
     </div>
     <div class="input" *ngIf="!Terminal.isProcessing">
         <div class="user">
-            <span style="color: #89b265;">{{ device.activeUser }}</span>
-            <span style="color: #89b265;">@</span>
-            <span style="color: #89b265;">{{ device.deviceName }}</span>
+            <span style="color: #3fb7f5;">{{ device.activeUser }}</span>
+            <span style="color: #3fb7f5;">@</span>
+            <span style="color: #3fb7f5;">{{ device.deviceName }}</span>
             <span style="color: #aaa;">:</span>
             <span style="color: #439cec;">/</span>
             <span style="color: #aaa;">$</span>

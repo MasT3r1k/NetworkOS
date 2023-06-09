@@ -1,9 +1,9 @@
-<div class="screen" [ngStyle]="{backgroundImage: 'url(' + device.background + ')'}" (click)="ContextMenu.active = false" (contextmenu)="$event.preventDefault();ContextMenu.active = false" *ngIf="device.isUnlocked">
+<div [ngClass]="{screen: true, reverse: device.taskBar.position == 'top'}" [ngStyle]="{backgroundImage: 'url(' + device.background + ')'}" (click)="ContextMenu.active = false" (contextmenu)="$event.preventDefault();ContextMenu.active = false" *ngIf="device.isUnlocked">
     <div class="desktop">
         <div class="selectingArea" (mousedown)="DesktopSelector.activeSelector($event)">
             <div *ngIf="DesktopSelector.active" [ngClass]="{selector: true}" [ngStyle]="{top: DesktopSelector.GetY(true) + 'px', left: DesktopSelector.GetX(true) + 'px', width: DesktopSelector.getWidth() + 'px', height: DesktopSelector.getHeight() + 'px'}"></div>
         </div>
-        <div [ngClass]="{item: true, empty: item.app == ''}" *ngFor="let item of items;index as index" (dblclick)="Processes.createProcess(item.app, true)" (contextmenu)="ContextMenu.set({type: 'desktopItem', process: item.app}, $event)">
+        <div [ngClass]="{item: true, empty: item.app == ''}" *ngFor="let item of items;index as index" (dblclick)="Processes.createProcess(item.app, true)" (contextmenu)="ContextMenu.set({type: 'desktopItem', process: item.app, item: item}, $event)">
             <img *ngIf="item.app != ''" src="/assets/nvos/apps/{{ item.app }}.png" alt="" draggable="false" />
             
             <span>{{ (item.text) ? item.text : item.app  }}</span>
@@ -11,7 +11,7 @@
         <div class="windows">
             <div [ngClass]="{hidden: Processes.processes[process].hidden}" *ngFor="let process of Processes.list;index as processIndex">
                 <div [ngClass]="{window: !window.disabled, maximaze: window.maximazed, minimaze: window.minimazed, hidden: window.hidden, active: WindowActive == window, moving: WindowMoving.status}" *ngFor="let window of Processes.processes[process].windows;index as index;" [ngStyle]="{width: window.width + 'px', height: window.height + 'px', borderRadius: window.borderRadius + 'px', zIndex: getIndex(window)}" (mousedown)="window.activeWindow()">
-                    <div class="window-header" (mousedown)="window.move($event)">
+                    <div class="window-header" (mousedown)="window.move($event)" (dblclick)="window.maximaze()">
                         <div class="title">{{ window.title }}</div>
                         <div class="buttons">
                             <div class="btn close" *ngIf="window.buttons.close" (click)="window.closeWindow()"><i class="fa-solid fa-xmark"></i></div>
@@ -48,7 +48,7 @@
             </div>
         </div>
         <div class="right">
-            <div class="item clock" *ngIf="Processes.processes?.['NetworkTime']">{{ Processes.processes['NetworkTime'].data.hours }}:{{ Processes.processes['NetworkTime'].data.minutes }}:{{ Processes.processes['NetworkTime'].data.seconds }}</div>
+            <div class="item clock" *ngIf="Processes.processes?.['NetworkTime']">{{ Processes.processes['NetworkTime'].data.format(device.taskBar.timeFormat) }}</div>
         </div>
     </div>
 </div>

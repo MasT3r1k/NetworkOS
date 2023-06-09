@@ -1,0 +1,30 @@
+section {
+    margin-bottom: 1rem;
+}
+
+h1 {
+    margin-top: 0;
+    color: #fff;
+}
+
+.select-full {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.select-full .option {
+    padding: 4px 12px;
+    border-radius: 16px;
+    cursor: pointer;
+    margin: 8px;
+    text-align: center;
+}
+
+.select-full .option:hover {
+    background-color: hsla(217,7.6%,33.5%,0.16);
+}
+
+.select-full .option.active {
+    background-color: hsla(217,7.6%,33.5%,0.24);
+}
