@@ -1,26 +1,26 @@
 <main>
     <div class="options">
-        <div [ngClass]="{option: true, active: active == 0}" (click)="active = 0">Procesy</div>
-        <div [ngClass]="{option: true, active: active == 1}" (click)="active = 1">Uživatelé</div>
-        <div [ngClass]="{option: true, active: active == 2}" (click)="active = 2">Po spuštění</div>
+        <div [ngClass]="{option: true, active: data.active == 0}" (click)="data.active = 0">Procesy</div>
+        <div [ngClass]="{option: true, active: data.active == 1}" (click)="data.active = 1">Uživatelé</div>
+        <div [ngClass]="{option: true, active: data.active == 2}" (click)="data.active = 2">Po spuštění</div>
     </div>
     <div class="sections">
-        <div class="section" *ngIf="active == 0" id="procesy">
+        <div class="section" *ngIf="data.active == 0" id="procesy">
             <h1>Zapnuté aplikace</h1>
-            <div *ngFor="let proces of getProcesses(Procesy, false);" [ngClass]="{proces: true, active: selected_proces == proces}" (click)="selected_proces = proces">
+            <div *ngFor="let proces of getProcesses(data.Procesy, false);" [ngClass]="{proces: true, active: data.selected_proces == proces}" (click)="data.selected_proces = proces">
                 <p>{{ proces.name }}</p>
             </div>
             <h1>Procesy na pozadí</h1>
-            <div *ngFor="let proces of getProcesses(Procesy, true);" [ngClass]="{proces: true, active: selected_proces == proces}" (click)="selected_proces = proces">
+            <div *ngFor="let proces of getProcesses(data.Procesy, true);" [ngClass]="{proces: true, active: data.selected_proces == proces}" (click)="data.selected_proces = proces">
                 <p>{{ proces.name }}</p>
             </div>
-            <p class="btn" *ngIf="selected_proces != null" (click)="selected_proces.closeProcess();selected_proces = null">Vypnout proces</p>
+            <p class="btn" *ngIf="data.selected_proces != null" (click)="data.selected_proces.closeProcess();data.selected_proces = null">Vypnout proces</p>
         </div>
 
-        <div class="section" *ngIf="active == 1">
+        <div class="section" *ngIf="data.active == 1">
             <h1>Uživatelé</h1>
-            <div *ngFor="let user of device.getUsers()" [ngClass]="{user: true, active: device.activeUser == user}">
-                {{ user }}
+            <div *ngFor="let user of data.device.getUsers()" [ngClass]="{user: true, active: data.device.activeUser == user}">
+                {{ data.device.getUser(user)?.name }}
             </div>
         </div>
     </div>

@@ -50,10 +50,15 @@ export class NvosComponent implements OnInit {
 
     this.items[0].app = "Settings";
     this.items[0].text = "Nastavení";
+
     this.items[1].app = "TaskManager";
     this.items[1].text = "Správce úloh";
+
     this.items[2].app = "Terminal";
     this.items[2].text = "Terminál";
+
+    this.items[3].app = "Weather";
+    this.items[3].text = "Počasí";
 
 
     this.startSystem();

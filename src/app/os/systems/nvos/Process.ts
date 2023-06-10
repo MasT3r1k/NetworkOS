@@ -17,8 +17,7 @@ export namespace Processes {
         declare data: any;
 
         run: Function = () => {
-            let loadedLoading = new Date().getTime();
-            console.log("Process " + this.name + " started in " + (loadedLoading - this.startedLoading) + "ms!");
+            console.log("Process " + this.name + " started!");
         }
 
         update: Function = () => {};
@@ -53,7 +52,7 @@ export namespace Processes {
             if (config && config?.maxWindows != null) {
                 this.maxWindows = config.maxWindows as number;
             }
-            if (config?.component && (this.maxWindows === -1 || this.windows.length < this.maxWindows)) {
+            if (config && config?.component && (this.maxWindows === -1 || this.windows.length < this.maxWindows)) {
                 this.openWindow(config.component, config.loader)
             }
 
@@ -69,6 +68,7 @@ export namespace Processes {
             this.data = data;
         }
 
+
         public setAsHidden(): void {
             this.hidden = true;
         }
@@ -83,10 +83,9 @@ export namespace Processes {
 
         public openWindow(component: Type<any>, loader?: Type<any>) {
             if (this.maxWindows != -1 && this.windows.length >= this.maxWindows) { return; }
-            let win = new WindowApp(this.name, (NetworkLanguages.locale[NetworkLanguages.getLanguage()]['data']['apps'][this.name]) ? NetworkLanguages.locale[NetworkLanguages.getLanguage()]['data']['apps'][this.name] : this.name);
+            let win = new WindowApp(this.name, (NetworkLanguages.locale[NetworkLanguages.getLanguage()]['data']['apps'][this.name]) ? NetworkLanguages.locale[NetworkLanguages.getLanguage()]['data']['apps'][this.name] : this.name, loader);
             win.loadComponent(component);
             this.windows.push(win);
-            win.loaded = true;
         }
 
         public closeProcess(): void {

@@ -95,9 +95,9 @@ class Device {
   }
 
   public getUsers(): string[] {
-    let a: string[] = [];
-    this.users.forEach((u) => a.push(u.name.toLowerCase()));
-    return a;
+    let _: string[] = [];
+    this.users.forEach((u) => _.push(u.name.toLowerCase()));
+    return _;
   }
 
   public getUser(user: string): User | null {

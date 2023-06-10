@@ -29,6 +29,9 @@ import { ManageComponent } from './os/systems/nvos/apps/settings/manage/manage.c
 import { MultitaskComponent } from './os/systems/nvos/apps/settings/multitask/multitask.component';
 import { SourcecodeComponent } from './os/systems/nvos/apps/settings/sourcecode/sourcecode.component';
 import { LockscreenComponent } from './os/systems/nvos/apps/settings/lockscreen/lockscreen.component';
+import { WeatherComponent } from './os/systems/nvos/apps/weather/weather.component';
+import { LoaderComponent } from './os/systems/nvos/apps/weather/loader/loader.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -59,11 +62,14 @@ import { LockscreenComponent } from './os/systems/nvos/apps/settings/lockscreen/
     MultitaskComponent,
     SourcecodeComponent,
     LockscreenComponent,
+    WeatherComponent,
+    LoaderComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

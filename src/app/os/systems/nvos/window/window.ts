@@ -64,6 +64,7 @@ export class WindowApp implements App {
         this.process = process;
         this.title = title;
         if (loader) this.loader = loader;
+        else this.makeLoaded();
         WindowOrder.push(this);
         WindowActive = this;
     }
@@ -74,6 +75,12 @@ export class WindowApp implements App {
 
     loadComponent(component: Type<any>): void {
         this.component = component;
+    }
+
+    makeLoaded(): void {
+        this.loaded = true;
+        let t = new Date().getTime() - Processes.processes[this.process].startedLoading;
+        console.log("Window " + this.process + " was loaded in " + t + "ms");
     }
 
     setButtons(btns: windowButtons, boolean: boolean): void {

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { Processes } from '../../Process';
-import { device as System } from '../../system';
+import { data } from './loader/loader.component';
+import { WindowApp } from '../../window/window';
 
 @Component({
   selector: 'app-taskmanager',
@@ -8,15 +9,23 @@ import { device as System } from '../../system';
   styleUrls: ['./taskmanager.component.css']
 })
 export class TaskmanagerComponent implements OnInit {
-  active: number = 0;
-  selected_proces: Processes.Process | null = null; 
-  Procesy = Processes.processes;
-  device = System;
+
+  declare window: WindowApp;
+  declare process: Processes.Process;
+
+  data = data;
+
+  constructor(private elementRef: ElementRef) { }
   
   public getProcesses(pro: Record<string, Processes.Process>, boolean: boolean) {
     return Object.values(pro).filter(a => a.hidden == boolean)
   }
 
   ngOnInit() {
+    let winEl = this.elementRef.nativeElement.offsetParent;
+    this.process = Processes.processes[winEl.getAttribute("process")];
+    this.window = this.process.windows[winEl.getAttribute("window")];
+
+    console.log(this.process.name)
   }
 }

@@ -10,7 +10,7 @@
         </div>
         <div class="windows">
             <div [ngClass]="{hidden: Processes.processes[process].hidden}" *ngFor="let process of Processes.list;index as processIndex">
-                <div [ngClass]="{window: !window.disabled, maximaze: window.maximazed, minimaze: window.minimazed, hidden: window.hidden, active: WindowActive == window, moving: WindowMoving.status}" *ngFor="let window of Processes.processes[process].windows;index as index;" [ngStyle]="{width: window.width + 'px', height: window.height + 'px', borderRadius: window.borderRadius + 'px', zIndex: getIndex(window)}" (mousedown)="window.activeWindow()">
+                <div [ngClass]="{window: !window.disabled, maximaze: window.maximazed, minimaze: window.minimazed, hidden: window.hidden, active: WindowActive == window, moving: WindowMoving.status}" *ngFor="let window of Processes.processes[process].windows;index as index;" [ngStyle]="{width: window.width + 'px', height: window.height + 'px', borderRadius: window.borderRadius + 'px', zIndex: getIndex(window)}" (mousedown)="window.activeWindow()" [attr.process]="process.toString()" [attr.window]="index">
                     <div class="window-header" (mousedown)="window.move($event)" (dblclick)="window.maximaze()">
                         <div class="title">{{ window.title }}</div>
                         <div class="buttons">
