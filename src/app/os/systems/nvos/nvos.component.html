@@ -4,7 +4,7 @@
             <div *ngIf="DesktopSelector.active" [ngClass]="{selector: true}" [ngStyle]="{top: DesktopSelector.GetY(true) + 'px', left: DesktopSelector.GetX(true) + 'px', width: DesktopSelector.getWidth() + 'px', height: DesktopSelector.getHeight() + 'px'}"></div>
         </div>
         <div [ngClass]="{item: true, empty: item.app == ''}" *ngFor="let item of items;index as index" (dblclick)="Processes.createProcess(item.app, true)" (contextmenu)="ContextMenu.set({type: 'desktopItem', process: item.app, item: item}, $event)">
-            <img *ngIf="item.app != ''" src="/assets/nvos/apps/{{ item.app }}.png" alt="" draggable="false" />
+            <img *ngIf="item.app != ''" src="/assets/nvos/apps/{{ item.app }}.webp" alt="" draggable="false" />
             
             <span>{{ (item.text) ? item.text : item.app  }}</span>
         </div>

@@ -48,9 +48,9 @@ class Device {
   public isUnlocked: boolean = true;
   public devMode: boolean = true;
   public backgroundType: backgroundTypes = 'classic';
-  public background: string = '/assets/nvos/default_wallpaper_6.jpg';
-  public backgroundHistory: string[] = ['/assets/nvos/default_wallpaper_6.jpg', '/assets/nvos/default_wallpaper_2.jpg', '/assets/nvos/default_wallpaper_3.jpg', '/assets/nvos/default_wallpaper_4.jpg', '/assets/nvos/default_wallpaper_5.jpg', '/assets/nvos/default_wallpaper_1.jpg'];
-  public backgroundLockscreen: string = '/assets/nvos/default_wallpaper_5.jpg';
+  public background: string = '/assets/nvos/default_wallpaper_6.webp';
+  public backgroundHistory: string[] = ['/assets/nvos/default_wallpaper_6.webp', '/assets/nvos/default_wallpaper_2.webp', '/assets/nvos/default_wallpaper_3.webp', '/assets/nvos/default_wallpaper_4.webp', '/assets/nvos/default_wallpaper_5.webp', '/assets/nvos/default_wallpaper_1.webp'];
+  public backgroundLockscreen: string = '/assets/nvos/default_wallpaper_5.webp';
   public taskBar: Taskbar = {
     position: 'bottom',
     timeFormat: '%h:%m:%s'
