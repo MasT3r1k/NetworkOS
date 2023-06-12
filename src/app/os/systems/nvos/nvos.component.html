@@ -44,7 +44,7 @@
                 <i class="fa-regular fa-browsers"></i>
             </div>
             <div [ngClass]="{active: Processes.processes[process]?.windows?.[0]?.minimazed == false, item: true, app: true, disabled: Processes.processes[process].disabled == true || Processes.processes[process].hidden == true}" *ngFor="let process of Processes.list" (click)="(Processes.processes[process].windows.length > 1) ? '' : Processes.processes[process].windows[0].minimaze()">
-                <img *ngIf="Processes.processes[process].disabled == false && Processes.processes[process].hidden == false" src="/assets/nvos/apps/{{ Processes.processes[process].name }}.png" alt="">
+                <img *ngIf="Processes.processes[process].disabled == false && Processes.processes[process].hidden == false" src="/assets/nvos/apps/{{ Processes.processes[process].name }}.webp" alt="">
             </div>
         </div>
         <div class="right">
