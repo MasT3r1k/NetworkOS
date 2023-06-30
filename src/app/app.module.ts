@@ -32,6 +32,12 @@ import { LockscreenComponent } from './os/systems/nvos/apps/settings/lockscreen/
 import { WeatherComponent } from './os/systems/nvos/apps/weather/weather.component';
 import { LoaderComponent } from './os/systems/nvos/apps/weather/loader/loader.component';
 import { HttpClientModule } from '@angular/common/http';
+import { NetworkappsComponent } from './os/systems/nvos/apps/networkhome/networkhome.component';
+import { NetworkdatabaseComponent } from './os/systems/nvos/apps/networkdatabase/networkdatabase.component';
+import { ClockComponent } from './os/systems/nvos/apps/clock/clock.component';
+import { SearchComponent } from './os/systems/nvos/apps/networkhome/search/search.component';
+import { InstalledComponent } from './os/systems/nvos/apps/networkhome/installed/installed.component';
+import { ProcessesComponent } from './os/systems/nvos/apps/networkhome/processes/processes.component';
 
 
 
@@ -65,6 +71,12 @@ import { HttpClientModule } from '@angular/common/http';
     LockscreenComponent,
     WeatherComponent,
     LoaderComponent,
+    NetworkappsComponent,
+    NetworkdatabaseComponent,
+    ClockComponent,
+    SearchComponent,
+    InstalledComponent,
+    ProcessesComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { device } from '../../../system';
+import { NDevice } from '../../../Main/Device';
 
 @Component({
   selector: 'app-display',
@@ -7,5 +7,6 @@ import { device } from '../../../system';
   styleUrls: ['./display.component.css', '../Settings.css']
 })
 export class DisplayComponent {
-  device = device
+  resolution = NDevice.System.getResolution();
+  background = NDevice.System.getMainBackground();
 }

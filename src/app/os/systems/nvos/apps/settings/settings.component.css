@@ -4,6 +4,9 @@ main
     flex-direction: row;
     height: 100%;
     position: relative;
+    background-color: #222;
+    border-top-left-radius: 8px;
+
 }
 
 .sidebar
@@ -17,6 +20,7 @@ main
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: #484848 transparent;
+    border-top-left-radius: inherit;
 }
 
 .sidebar ul
@@ -36,7 +40,6 @@ main
 {
     padding: 8px 16px;
     margin: 4px 8px;
-    border-radius: 4px;
     cursor: pointer;
 }
 

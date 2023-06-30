@@ -1,0 +1,25 @@
+<div class="wrapper">
+    <div class="sidebar">
+        <div class="items">
+            <ul>
+
+                <li *ngFor="let item of sidebar;index as index" [ngClass]="{active: active === index}" (click)="active = index">
+                    <i [ngClass]="item.icon"></i>
+                    <span [innerText]="item.name"></span>
+                </li>
+
+            </ul>
+        </div>
+        <div class="bottom">
+            <ul>
+                <li [ngClass]="{active: active === sidebar.length}" (click)="active = sidebar.length">
+                    <i class="fa-solid fa-gears"></i>
+                    <span>Nastavení</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="content">
+        <ng-component [ngComponentOutlet]="(sidebar[active]) ? sidebar[active].component : SettingsComponent"></ng-component>
+    </div>
+</div>

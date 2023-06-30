@@ -1,17 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { BiosApi } from 'src/app/bios/biosApi';
-import { appsConfig } from './appsConfig';
-import { module as NetworkTime } from "./apps/NetworkTime";
-import { Processes } from './Process';
-import { WindowApp, WindowOrder, WindowActive, unActiveWindow, moving } from './window/window';
+import { WindowActive, unActiveWindow, moving } from './window/window';
 import { Selecting } from './Selecting';
 import { context } from './contextMenu';
 import { device } from './system';
 import { FormControl, FormGroup } from '@angular/forms';
 import { fromEvent } from 'rxjs/internal/observable/fromEvent';
 import { debounceTime } from 'rxjs/operators';
-import { Utils } from 'src/app/utils/NVUtils';
-import { DiskManager } from 'src/app/utils/diskManager';
+import { NDevice, desktopApp } from './Main/Device';
+import { NProcesses } from './Main/Processes';
+import { ApplicationDatabase } from './apps/networkhome/NetworkHome';
 
 interface LoginForm {
   username: FormControl<string>;
@@ -25,70 +23,7 @@ interface LoginForm {
 })
 export class NvosComponent implements OnInit {
 
-  appsConfig = appsConfig;
-  public items: any[] = [];
-  BiosApi = BiosApi;
-
-  loginUser = new FormGroup<LoginForm>({
-    username: new FormControl('', {nonNullable: true}),
-    password: new FormControl('', {nonNullable: true})
-  })
-
-
-  Processes = Processes;
-  WindowActive = WindowActive;
-  unActiveWindow = unActiveWindow;
-  DesktopSelector = Selecting.DesktopSelector;
-  WindowMoving = moving;
-  ContextMenu = context;
-  device = device;
-
-  ngOnInit() {
-    for(let i = 0;i < 12*25;i++) {
-      this.items.push({ app: '', text: '' });
-    }
-
-    this.items[0].app = "Settings";
-    this.items[0].text = "Nastavení";
-
-    this.items[1].app = "TaskManager";
-    this.items[1].text = "Správce úloh";
-
-    this.items[2].app = "Terminal";
-    this.items[2].text = "Terminál";
-
-    this.items[3].app = "Weather";
-    this.items[3].text = "Počasí";
-
-
-    this.startSystem();
-
-    this.device.updateResolution(windowResize());
-    fromEvent(window, 'resize')
-    .pipe(debounceTime(200))
-    .subscribe(() => {
-      this.device.updateResolution(windowResize());
-    });
-
-    function windowResize()
-    {
-      let html = document.querySelector("html");
-      return {
-        width: html?.clientWidth || 0,
-        height: html?.clientHeight || 0
-      }
-    }
-
-  }
-
-  public getIndex(window: WindowApp) {
-    return 6 + WindowOrder.indexOf(window);
-  }
-
-  public startSystem() {
-    NetworkTime.run();
-    DiskManager.Disk
-  }
+  /** OLD VERSION */
 
   public UserLoginToSystem() {
 
@@ -102,6 +37,85 @@ export class NvosComponent implements OnInit {
     if (!device.getUser(u)?.checkPassword(p)) return console.error("Password is wrong!")
     device.isUnlocked = true;
     device.setUser(u);
+  }
+
+  BiosApi = BiosApi;
+
+  loginUser = new FormGroup<LoginForm>({
+    username: new FormControl('', {nonNullable: true}),
+    password: new FormControl('', {nonNullable: true})
+  })
+
+
+  WindowActive = WindowActive;
+  unActiveWindow = unActiveWindow;
+  DesktopSelector = Selecting.DesktopSelector;
+  WindowMoving = moving;
+  ContextMenu = context;
+
+  /** NEW VERSION */
+  device = NDevice.System;
+  Processes = NProcesses;
+  public renaming: string = ''; 
+
+  ngOnInit() {
+
+    // Start system
+    this.device.startSystem('NetworkOS', 'admin', 'admin');
+
+    // On resize change display resolution
+    this.device.setResolution(windowResize());
+    fromEvent(window, 'resize')
+    .pipe(debounceTime(200))
+    .subscribe(() => {
+      this.device.setResolution(windowResize());
+    });
+
+    function windowResize() {
+      let html = document.querySelector("html");
+      return {
+        width: html?.clientWidth || 0,
+        height: html?.clientHeight || 0
+      }
+    }
+
+  }
+
+  public log(any: any) {
+    console.log(any);
+  }
+
+  ApplicationDatabase = ApplicationDatabase;
+  public getAppIcon(process: string): string {
+    return ApplicationDatabase.filter(_ => _.name === process)[0].icon;
+  }
+  
+  setTextToRename(val: string): void {
+    this.renaming = val;
+  }
+
+  public addTextToName(event: KeyboardEvent, item: desktopApp) {
+    setTimeout(() => {
+      this.renaming = (event.target as HTMLBaseElement)?.textContent ?? " ";
+    })
+    switch(event.key) {
+      case "Backspace":
+        item.text.slice(item.text.length - 1, item.text.length)
+        break;
+      case "Enter":
+        this.saveItemName(item);
+        break;
+  }
+  }
+
+  public saveItemName(item: desktopApp) {
+    if (item.editing == false) return;
+    if (item.text != this.renaming) {
+      console.log("App renamed to " + this.renaming)
+      item.text = this.renaming;
+    }
+    this.renaming = '';
+    item.editing = false;
   }
 
 }

@@ -6,6 +6,7 @@ import { LoaderComponent as TaskManagerLoader } from "./apps/taskmanager/loader/
 import { TerminalComponent } from "./apps/terminal/terminal.component";
 import { WeatherComponent } from "./apps/weather/weather.component";
 import { LoaderComponent as WeatherLoader} from "./apps/weather/loader/loader.component";
+import { NetworkappsComponent } from "./apps/networkhome/networkhome.component";
 
 interface appConfig {
     id: string;
@@ -29,17 +30,17 @@ export class windowAppConfig implements appConfig {
         if (loader) {
             this.loader = loader;
         }
-        if (hidden) {
-            this.hidden = hidden;
-        }
+        this.hidden = hidden;
     }
 }
 
-export let appsConfig: Record<string, windowAppConfig> = {
-    Settings: new windowAppConfig('Settings', false, SettingsComponent, SettingsLoader),
-    TaskManager: new windowAppConfig('TaskManager', false, TaskmanagerComponent, TaskManagerLoader),
-    Terminal: new windowAppConfig('Terminal', false, TerminalComponent),
-    Weather: new windowAppConfig('Weather', false, WeatherComponent, WeatherLoader)
-};
+// export let appsConfig: Record<string, windowAppConfig> = {
+//     Settings: new windowAppConfig('Settings', false, SettingsComponent, SettingsLoader),
+//     TaskManager: new windowAppConfig('TaskManager', false, TaskmanagerComponent, TaskManagerLoader),
+//     Terminal: new windowAppConfig('Terminal', false, TerminalComponent),
+//     Weather: new windowAppConfig('Weather', false, WeatherComponent, WeatherLoader)
+// };
 
-appsConfig['Terminal'].maxWindows = -1;
+// appsConfig['Terminal'].maxWindows = -1;
+
+export let appManager: windowAppConfig = new windowAppConfig('NetworkApps', false, NetworkappsComponent);

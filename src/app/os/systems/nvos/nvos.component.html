@@ -1,59 +1,63 @@
-<div [ngClass]="{screen: true, reverse: device.taskBar.position == 'top'}" [ngStyle]="{backgroundImage: 'url(' + device.background + ')'}" (click)="ContextMenu.active = false" (contextmenu)="$event.preventDefault();ContextMenu.active = false" *ngIf="device.isUnlocked">
+<div [ngClass]="{screen: true}" [ngStyle]="{backgroundImage: 'url(' + device.getMainBackground() + ')'}" (click)="ContextMenu.active = false" (contextmenu)="$event.preventDefault();ContextMenu.active = false" *ngIf="device.isDeviceUnlocked()">
     <div class="desktop">
-        <div class="selectingArea" (mousedown)="DesktopSelector.activeSelector($event)">
-            <div *ngIf="DesktopSelector.active" [ngClass]="{selector: true}" [ngStyle]="{top: DesktopSelector.GetY(true) + 'px', left: DesktopSelector.GetX(true) + 'px', width: DesktopSelector.getWidth() + 'px', height: DesktopSelector.getHeight() + 'px'}"></div>
+        <!-- Desktop icons -->
+        <div [ngClass]="{item: true, empty: item.app == ''}" *ngFor="let item of device.desktopApps;index as index" (dblclick)="Processes.getProcess(item.app)?.run()" (contextmenu)="ContextMenu.set({type: 'desktopItem', process: item.app, item: item}, $event)">
+            <img *ngIf="item.app != ''" [src]="item.icon" alt="" draggable="false" />
+            <div role="textbox" inputmode="text" spellcheck="false" [contentEditable]="item.editing" [autofocus]="item.editing" (focus)="setTextToRename(item.text)" (blur)="saveItemName(item)" (keydown)="addTextToName($event, item)" [textContent]="(item.text) ? item.text : item.app"></div>
         </div>
-        <div [ngClass]="{item: true, empty: item.app == ''}" *ngFor="let item of items;index as index" (dblclick)="Processes.createProcess(item.app, true)" (contextmenu)="ContextMenu.set({type: 'desktopItem', process: item.app, item: item}, $event)">
-            <img *ngIf="item.app != ''" src="/assets/nvos/apps/{{ item.app }}.webp" alt="" draggable="false" />
-            
-            <span>{{ (item.text) ? item.text : item.app  }}</span>
-        </div>
+
+        <!-- Windows -->
         <div class="windows">
-            <div [ngClass]="{hidden: Processes.processes[process].hidden}" *ngFor="let process of Processes.list;index as processIndex">
-                <div [ngClass]="{window: !window.disabled, maximaze: window.maximazed, minimaze: window.minimazed, hidden: window.hidden, active: WindowActive == window, moving: WindowMoving.status}" *ngFor="let window of Processes.processes[process].windows;index as index;" [ngStyle]="{width: window.width + 'px', height: window.height + 'px', borderRadius: window.borderRadius + 'px', zIndex: getIndex(window)}" (mousedown)="window.activeWindow()" [attr.process]="process.toString()" [attr.window]="index">
-                    <div class="window-header" (mousedown)="window.move($event)" (dblclick)="window.maximaze()">
-                        <div class="title">{{ window.title }}</div>
+            <div [ngClass]="{hidden: Processes.getProcess(process)?.getVisibility() === false}" *ngFor="let process of Processes.getRunningProcesses();index as processIndex">
+
+                <div [ngClass]="{window: window.getVisibility(), maximaze: window.getStatus() == 'maximized', minimaze: window.getStatus() == 'minimized', hidden: !window.getVisibility(), active: Processes.windowActive == window, moving: Processes.moving.status}" *ngFor="let window of Processes.getProcess(process)?.getWindows();index as index;" [ngStyle]="{width: window.getSize().width + 'px', height: window.getSize().height + 'px', zIndex: Processes.getWindowOrder(window)}" (mousedown)="window.activeWindow()" [attr.process]="process.toString()" [attr.window]="index">
+                    <div class="window-header" (mousedown)="window.move($event)" (dblclick)="window.toggleStatus('maximized')">
+                        <div class="title">
+                            <img [src]="getAppIcon(process)" alt="">
+                            {{ window.getTitle() }}</div>
                         <div class="buttons">
-                            <div class="btn close" *ngIf="window.buttons.close" (click)="window.closeWindow()"><i class="fa-solid fa-xmark"></i></div>
-                            <div class="btn maximilaze" *ngIf="window.buttons.maximize" (click)="window.maximaze()"><i class="fa-regular fa-window-maximize"></i></div>
-                            <div class="btn minimilaze" *ngIf="window.buttons.minimize" (click)="window.minimaze()"><i class="fa-regular fa-window-minimize"></i></div>
+                            <div class="btn close" *ngIf="window.getHeader().close" (click)="window.closeWindow()"><i class="fa-regular fa-xmark"></i></div>
+                            <div class="btn maximilaze" *ngIf="window.getHeader().maximize" (click)="window.toggleStatus('maximized')"><i class="fa-regular fa-window-maximize"></i></div>
+                            <div class="btn minimilaze" *ngIf="window.getHeader().minimize" (click)="window.toggleStatus('minimized')"><i class="fa-regular fa-window-minimize"></i></div>
                         </div>
                     </div>
                     <div class="window-body">
-                        <ng-component *ngIf="(window.loaded && window.component) || window.loader" [ngComponentOutlet]="(window.loaded) ? window.component : window.loader"></ng-component>
+                        <ng-component *ngIf="window.getComponent()" [ngComponentOutlet]="window.getComponent()"></ng-component>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Context menu -->
         <div class="contextmenu" *ngIf="ContextMenu.active" [ngStyle]="{top: ContextMenu.coordinates.y + 'px', left: ContextMenu.coordinates.x + 'px'}">
             <div *ngFor="let item of ContextMenu.items" (click)="item.action()">
                 {{ item.text }}
             </div>
         </div>
     </div>
+
     <div class="taskbar">
         <div class="left">
             <div class="item">
                 <i class="fa-regular fa-table-cells-large"></i>
             </div>
             <div class="item search">
-                <input type="text" name="search" id="search" placeholder="Type here to search anything">
+                <input type="text" name="search" id="search" placeholder="Type here to search anything" disabled>
                 <i class="fa-regular fa-magnifying-glass"></i>
             </div>
             <div class="item">
                 <i class="fa-regular fa-browsers"></i>
             </div>
-            <div [ngClass]="{active: Processes.processes[process]?.windows?.[0]?.minimazed == false, item: true, app: true, disabled: Processes.processes[process].disabled == true || Processes.processes[process].hidden == true}" *ngFor="let process of Processes.list" (click)="(Processes.processes[process].windows.length > 1) ? '' : Processes.processes[process].windows[0].minimaze()">
-                <img *ngIf="Processes.processes[process].disabled == false && Processes.processes[process].hidden == false" src="/assets/nvos/apps/{{ Processes.processes[process].name }}.webp" alt="">
-            </div>
+
         </div>
         <div class="right">
-            <div class="item clock" *ngIf="Processes.processes?.['NetworkTime']">{{ Processes.processes['NetworkTime'].data.format(device.taskBar.timeFormat) }}</div>
         </div>
     </div>
+
 </div>
 
-<div class="screen logscreen" [ngStyle]="{backgroundImage: 'url(' + device.backgroundLockscreen + ')'}" *ngIf="!device.isUnlocked">
+
+<div class="screen logscreen" [ngStyle]="{backgroundImage: 'url(' + device.getLockBackground() + ')'}" *ngIf="!device.isDeviceUnlocked()">
     <div class="login-items">
         <div class="login-item">
             <i class="fa-solid fa-power-off"></i>

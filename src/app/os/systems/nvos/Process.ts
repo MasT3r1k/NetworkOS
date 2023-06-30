@@ -1,6 +1,6 @@
 import { Type } from "@angular/core";
 import { WindowApp } from "./window/window";
-import { appsConfig } from "./appsConfig";
+// import { appsConfig } from "./appsConfig";
 import { NetworkLanguages } from "./locale";
 
 export namespace Processes {
@@ -27,17 +27,17 @@ export namespace Processes {
             if (!name) return;
             if (list.includes(name) && processes?.[name])  {
                 let process = processes[name];
-                let config = appsConfig[process.name];
-                if (config.maxWindows) { process.maxWindows = config.maxWindows; }
-                if (config && config?.component && (process.maxWindows === -1 || process.windows.length < process.maxWindows)) {
-                    process.openWindow(config.component, config.loader)
-                }else{
-                    if (process.windows.length > 0) {
-                        if (process.windows[0].minimazed) {
-                            process.windows[0].minimaze();
-                        }
-                    }
-                }
+                // let config = appsConfig[process.name];
+                // if (config.maxWindows) { process.maxWindows = config.maxWindows; }
+                // if (config && config?.component && (process.maxWindows === -1 || process.windows.length < process.maxWindows)) {
+                //     process.openWindow(config.component, config.loader)
+                // }else{
+                //     if (process.windows.length > 0) {
+                //         if (process.windows[0].minimazed) {
+                //             process.windows[0].minimaze();
+                //         }
+                //     }
+                // }
                 return;
             }
             this.name = name;
@@ -48,13 +48,13 @@ export namespace Processes {
                 this.run();
             }
 
-            let config = appsConfig?.[this.name];
-            if (config && config?.maxWindows != null) {
-                this.maxWindows = config.maxWindows as number;
-            }
-            if (config && config?.component && (this.maxWindows === -1 || this.windows.length < this.maxWindows)) {
-                this.openWindow(config.component, config.loader)
-            }
+            // let config = appsConfig?.[this.name];
+            // if (config && config?.maxWindows != null) {
+            //     this.maxWindows = config.maxWindows as number;
+            // }
+            // if (config && config?.component && (this.maxWindows === -1 || this.windows.length < this.maxWindows)) {
+            //     this.openWindow(config.component, config.loader)
+            // }
 
             this.updateInterval = setInterval(this.update(), 1000);
         }

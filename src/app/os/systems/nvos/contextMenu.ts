@@ -1,5 +1,6 @@
 import { Utils } from "src/app/utils/NVUtils";
 import { Processes } from "./Process";
+import { NProcesses } from "./Main/Processes";
 
 interface ContentItem {
     text: string;
@@ -26,7 +27,7 @@ export class ContextMenu {
         x: 0,
         y: 0
     };
-    declare process: Processes.Process;
+    declare process: NProcesses.Process;
     constructor() { }
 
     public set(data: any, event: MouseEvent) {
@@ -38,12 +39,15 @@ export class ContextMenu {
                     x: event.clientX,
                     y: event.clientY
                 }
-                let proces = Processes.processes?.[data.process];
-                new ContextButton((proces) ? 'Zavřít' : 'Spustit', (proces) ? () => proces.closeProcess() : () => Processes.createProcess(data.process));
-                if (proces && proces.windows.length > 0 && proces.maxWindows < proces.windows.length) {
+                let proces = NProcesses.getProcess(data.process);
+                if (!proces) return;
+                new ContextButton((proces && proces.getRunning()) ? 'Zavřít' : 'Spustit', (proces.getRunning()) ? () => proces?.kill() : () => proces?.run());
+                if (proces && proces.getRunning() && proces.getWindows.length > 0 && proces.canOpenNextWindow()) {
                     new ContextButton('Otevřít další okno', () => Processes.createProcess(data.process))
                 }
-                new ContextButton('Přejmenovat', () => {data.item.text = 'Přejmenováno'});
+                new ContextButton('Přejmenovat', () => {
+                    data.item.editing = true;
+                });
                 this.active = true;
             }
         }, 5);
