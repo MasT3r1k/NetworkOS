@@ -1,0 +1,13 @@
+section {
+    width: 100%;
+}
+
+.search {
+    margin: 0px auto;
+    width: 375px;
+}
+
+
+input::placeholder {
+    text-align: center;
+}

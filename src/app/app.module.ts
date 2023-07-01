@@ -21,7 +21,6 @@ import { ApperanceComponent } from './os/systems/nvos/apps/settings/apperance/ap
 import { SoundComponent } from './os/systems/nvos/apps/settings/sound/sound.component';
 import { NotificationsComponent } from './os/systems/nvos/apps/settings/notifications/notifications.component';
 import { StorageComponent } from './os/systems/nvos/apps/settings/storage/storage.component';
-import { UsersComponent } from './os/systems/nvos/apps/settings/users/users.component';
 import { LanguageComponent } from './os/systems/nvos/apps/settings/language/language.component';
 import { UpdatesystemComponent } from './os/systems/nvos/apps/settings/updatesystem/updatesystem.component';
 import { AboutsystemComponent } from './os/systems/nvos/apps/settings/aboutsystem/aboutsystem.component';
@@ -38,6 +37,7 @@ import { ClockComponent } from './os/systems/nvos/apps/clock/clock.component';
 import { SearchComponent } from './os/systems/nvos/apps/networkhome/search/search.component';
 import { InstalledComponent } from './os/systems/nvos/apps/networkhome/installed/installed.component';
 import { ProcessesComponent } from './os/systems/nvos/apps/networkhome/processes/processes.component';
+import { UsersComponent as NetworkHomeUsers } from './os/systems/nvos/apps/networkhome/users/users.component';
 
 
 
@@ -61,7 +61,6 @@ import { ProcessesComponent } from './os/systems/nvos/apps/networkhome/processes
     SoundComponent,
     NotificationsComponent,
     StorageComponent,
-    UsersComponent,
     LanguageComponent,
     UpdatesystemComponent,
     AboutsystemComponent,
@@ -77,6 +76,7 @@ import { ProcessesComponent } from './os/systems/nvos/apps/networkhome/processes
     SearchComponent,
     InstalledComponent,
     ProcessesComponent,
+    NetworkHomeUsers
   ],
   imports: [
     BrowserModule,

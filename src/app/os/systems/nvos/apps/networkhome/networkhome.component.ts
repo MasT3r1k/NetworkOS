@@ -5,7 +5,7 @@ import { SettingsComponent } from '../settings/settings.component';
 @Component({
   selector: 'app-networkhome',
   templateUrl: './networkhome.component.html',
-  styleUrls: ['./networkhome.component.css']
+  styleUrls: ['./networkhome.component.css', './main.css']
 })
 export class NetworkappsComponent {
 

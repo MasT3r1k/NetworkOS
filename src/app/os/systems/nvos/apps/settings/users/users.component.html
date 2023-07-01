@@ -1,7 +1,0 @@
-<h1>Uživatelé</h1>
-<h3>Active user: {{ device.activeUser }}</h3>
-<div *ngFor="let user of device.getUsers()">
-    {{ device.getUser(user)?.name }}
-    <div class="switchUser" *ngIf="device.activeUser.toLowerCase() != user.toLowerCase()" (click)="device.switchUser(user)">Změnit uživatele</div>
-</div>
-<div class="createUser" (click)="device.addUser('MasTerik')">Vytvořit uživatele</div>

@@ -1,0 +1,145 @@
+/* Main */
+section {
+    padding: 2rem;
+    height: 100%;
+}
+
+section h1 {
+    color: #fff;
+}
+
+.bottom {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+i.expander {
+    margin-left: 8px;
+    width: 16px;
+}
+
+/* Colors */
+.red {
+    background-color: rgba(124, 10, 2, .24)!important;
+    border-color: rgba(242, 63, 66, .72)!important;
+}
+
+/* BTN */
+.btn {
+    padding: 4px 8px;
+    margin: 0 8px;
+    border-radius: 4px;
+    background-color: #323232;
+    color: #eee;
+    cursor: pointer;
+    user-select: none;
+    width: fit-content;
+    box-shadow: rgba(149, 157, 165, 0.16) 0px 0px 8px;
+    position: relative;
+}
+
+.btn .toast {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 300px;
+    width: max-content;
+    font-size: 14px;
+    text-align: center;
+    background-color: rgba(100, 100, 111, 0.12);
+    padding: 4px 8px;
+}
+
+.red .btn {
+    background-color: rgba(218, 55, 60, 0.2)!important;
+    border: 1px solid rgba(218, 55, 60, .48);
+    box-shadow: rgba(218, 55, 60, .16) 0px 0px 8px;
+}
+
+.btn.disabled {
+    cursor: not-allowed;
+}
+
+/* Item */
+.items {
+    display: flex;
+    flex-direction: column;
+}
+
+.items .item .row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px;
+}
+
+.items .item {
+    display: flex;
+    flex-direction: column;
+    margin: 8px 0;
+    border: 1px solid #303030;
+    background-color: rgba(0,0,0,.04);
+    box-shadow: rgba(100, 100, 111, 0.12) 0px 1px 4px 0px;
+    cursor: pointer;
+}
+
+.items .item .info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.items .item .info div.title {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.items .item .info i {
+    width: 28px;
+    height: 28px;
+    aspect-ratio: 1/1;
+    font-size: 14px;
+    display: flex;
+    margin-right: 8px;
+    justify-content: center;
+    align-items: center;
+    color: #ddd;
+    border-radius: 50rem;
+    background-color: rgba(21, 21, 21, .64);
+}
+
+
+.items .item .info span:first-of-type {
+    color: #fff;
+}
+
+/* Input form*/
+.form-group {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+input {
+    width: 100%;
+    height: 36px;
+    min-width: 350px;
+    background-color: #181818;
+    border: 1px solid #242424;
+    border-radius: 999rem;
+    color: #bbb;
+    padding: 6px 16px;
+}
+
+input::placeholder {
+    color: #bbb;
+}
+
+input:focus {
+    outline: none;
+}

@@ -1,1 +1,125 @@
-<p>users works!</p>
+<section (click)="selectedUser = ''" *ngIf="activeSection == 'main'">
+    <h1>Uživatelé</h1>
+    <div class="items">
+        <div [ngClass]="{item: true, active: selectedUser === user}" *ngFor="let user of device.getUsers()" (click)="updateUser(user)" (dblclick)="updateUser(user);changeSection('userManage');">
+            <div [ngClass]="{row: true}">
+                <div class="info">
+                    <span [textContent]="user"></span>
+                </div>
+                <div class="actions">
+                    <div class="btn" *ngIf="device.getActiveUser().toLowerCase() !== user.toLowerCase() && device.getUser(user).checkAdmin()">Smazat</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="btn" (click)="changeSection('userCreate')">Vytvořit</div>
+        <div class="btn" *ngIf="selectedUser != ''" (click)="changeSection('userManage')">Spravovat</div>
+    </div>
+</section>
+
+<section *ngIf="activeSection == 'userManage' && selectedUser != ''">
+
+    <h1>Upravujete uživatele {{ selectedUser }}</h1>
+
+    <div class="items">
+        <div [ngClass]="{item: true, active: expand.isExpand('$#Name')}">
+            <div class="row" (click)="expand.toggleExpand('$#Name')">
+                <div class="info">
+                    <div class="title">
+                        <i class="fa-regular fa-user"></i>
+                        <span>Uživatelské jméno</span>
+                    </div>
+                </div>
+                <div class="actions">
+                    <span>{{ selectedUser }}</span>
+                    <i *ngIf="!expand.isExpand('$#Name')" class="fa-solid fa-chevron-down expander"></i>
+                    <i *ngIf="expand.isExpand('$#Name')" class="fa-regular fa-minus expander"></i>
+
+                </div>
+            </div>
+            <div class="items" style="margin-top: 8px;border-top: 2px solid #303030;padding-top: 8px;" *ngIf="expand.isExpand('$#Name')">
+                <div class="row">
+                    <div class="info">
+                        <div class="form-group">
+                            <input type="text" id="name" value="{{ selectedUser }}">
+                        </div>
+                        <p class="note">Nechte stejné pro nezmění jména</p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div [ngClass]="{item: true, active: expand.isExpand('$#Password')}">
+            <div class="row" (click)="expand.toggleExpand('$#Password')">
+                <div class="info">
+                    <div class="title">
+                        <i class="fa-regular fa-lock"></i>
+                        <span>Heslo</span>
+                    </div>
+                </div>
+                <div class="actions">
+                    <span>{{ device.getUser(selectedUser).hasPassword() ? 'Nastaven' : 'Nenastaven' }}</span>
+                    <i *ngIf="!expand.isExpand('$#Password')" class="fa-solid fa-chevron-down expander"></i>
+                    <i *ngIf="expand.isExpand('$#Password')" class="fa-regular fa-minus expander"></i>
+                </div>
+            </div>
+            <div class="items" style="margin-top: 8px;border-top: 2px solid #303030;padding-top: 8px;" *ngIf="expand.isExpand('$#Password')">
+                <div class="row">
+                    <div class="info">
+                        <div class="form-group">
+                            <input type="text" id="password" placeholder="Heslo" />
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="password2" placeholder="Znova heslo" />
+                        </div>
+                        <p class="note">Nechte prázdné pro nepřenastavování</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="item">
+            <div class="row">
+                <div class="info">
+                    <div class="title">
+                        <i class="fa-regular fa-hammer"></i>
+                        <span>Administrátor</span>
+                    </div>
+                </div>
+                <div class="actions">
+                    <span>{{ device.getUser(selectedUser).checkAdmin() ? 'Jedná se o Administrátora' : (device.getUser(device.getActiveUser()).checkAdmin()) ? 'Nastavit jako Administrátor' : 'Nejedná se o Administrátora' }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="item red" *ngIf="selectedUser !== device.getActiveUser()">
+            <div class="row">
+                <div class="info">
+                    <div class="title">
+                        <i class="fa-regular fa-trash"></i>
+                        <span>Smazat tento účet?</span>
+                    </div>
+                </div>
+                <div class="actions">
+                    <div class="btn" (click)="device.deleteUser(selectedUser)">Smazat</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="bottom">
+        <div class="btn" (click)="changeSection('main')">Uložit</div>
+        <div class="btn" (click)="changeSection('main')">Zrušit</div>
+    </div>
+</section>
+
+<section *ngIf="activeSection == 'userCreate'">
+    <h1>Vytváříte nového uživatele</h1>
+
+    <div class="bottom">
+        <div class="btn" (click)="changeSection('main')">Vytvořit</div>
+        <div class="btn" (click)="changeSection('main')">Zrušit</div>
+    </div>
+</section>

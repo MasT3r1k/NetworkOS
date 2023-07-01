@@ -29,6 +29,19 @@ export namespace NProcesses {
         return p;                           //? Return array
     };
 
+    export function getInstalledProcesses(): string[] {
+
+        let p: string[] = [];               //? Empty array
+
+        processes.forEach((value, key) => { //? Add items to array
+            if (value.getInstallStatus() === false) return;
+            p.push(key);
+        });
+
+        return p;                           //? Return array
+    };
+
+
     export class Process {
         public name: string = '';
         private appStarted: number = new Date().getTime();
@@ -114,6 +127,9 @@ export namespace NProcesses {
             }, 100);
         }
 
+        public getInstallStatus(): boolean {
+            return this.installed;
+        }
 
 
         /*

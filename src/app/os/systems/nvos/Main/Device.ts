@@ -62,6 +62,10 @@ export namespace NDevice {
             return this.lockStatus && this.deviceUser != '';
         }
 
+        public lockDevice(): void {
+            this.lockStatus = false;
+        }
+
         public getDesktopApps(): desktopApp[] {
             return this.desktopApps;
         }
@@ -88,7 +92,22 @@ export namespace NDevice {
             let b = this.desktopApps.filter(__ => __.isEmpty == true)[0];
             if (!b) return;
             this.desktopApps[this.desktopApps.indexOf(b)] = a;
+        }
 
+        public getUser(user: string): User {
+            return this.users.filter(_ => _.getName().toLowerCase() === user.toLowerCase())[0];
+        }
+
+        public getUsers(): string[] {
+            let _: string[] = [];
+            this.users.forEach(u => {
+                _.push(u.getName())
+            })
+            return _;
+        }
+
+        public getActiveUser(): string {
+            return this.deviceUser;
         }
 
         public startSystem(device: string, user: string, password: string) {
@@ -113,7 +132,18 @@ export namespace NDevice {
             // Create admin user
             let u = new User(user, password);
             u.setAdmin(true);
-            this.users.push(new User(user))
+            this.deviceUser = user;
+            this.users.push(u)
+        }
+
+        public deleteUser(user: string): boolean {
+            if (this.getUser(this.deviceUser).checkAdmin() !== true) return false;
+            if (this.getUser(user) === null) return false;
+            if (this.deviceUser.toLowerCase() === user.toLowerCase()) return false;
+            
+            this.users.slice(this.users.indexOf(this.getUser(user)), this.users.indexOf(this.getUser(user)) + 1);
+
+            return false;
         }
 
     }
@@ -131,16 +161,28 @@ export namespace NDevice {
             this.logged = true;
         }
 
-        public setAdmin(force: boolean = false) {
-            this.isAdmin = (force) ? true : false;
+        public getName(): string {
+            return this.name;
+        }
+
+        public hasPassword(): boolean {
+            return this.password !== '';
+        }
+
+        public setAdmin(force: boolean = false): void {
+            if (force) {
+                this.isAdmin = true;
+            }
+
+            // TODO GET ACTIVE USER, IF ADMIN, CAN SET ADMIN
+        }
+
+        public removeAdmin(): void {
+            this.isAdmin = false;
         }
 
         public checkAdmin(): boolean {
             return this.isAdmin;
-        }
-
-        public removeAdmin() {
-            this.isAdmin = false;
         }
     }
 

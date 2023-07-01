@@ -6,7 +6,6 @@ import { ApperanceComponent as Apperance } from "./apperance/apperance.component
 import { SoundComponent as Sound } from "./sound/sound.component";
 import { NotificationsComponent as Notifications } from "./notifications/notifications.component";
 import { StorageComponent as Storage } from "./storage/storage.component";
-import { UsersComponent as Users } from "./users/users.component";
 import { LanguageComponent as Language } from "./language/language.component";
 import { UpdatesystemComponent as UpdateSystem } from "./updatesystem/updatesystem.component";
 import { AboutsystemComponent as AboutSystem } from "./aboutsystem/aboutsystem.component";
@@ -54,10 +53,6 @@ class SettingsApp {
             icon: 'fa-solid fa-hard-drive',
             text: 'Uložiště',
             component: Storage
-        }, {
-            icon: 'fa-solid fa-users',
-            text: 'Uživatelé',
-            component: Users
         }, {
             icon: 'fa-solid fa-language',
             text: 'Jazyk',

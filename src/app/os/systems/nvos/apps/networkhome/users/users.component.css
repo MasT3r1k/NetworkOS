@@ -1,0 +1,15 @@
+.bottom {
+    padding: 1rem;
+    align-items: center;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.bottom .btn {
+    padding: 8px 16px;
+}
+
+
+.active {
+    background-color: rgba(0,0,0,.24)!important;
+}

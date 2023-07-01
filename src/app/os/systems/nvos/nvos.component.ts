@@ -61,7 +61,7 @@ export class NvosComponent implements OnInit {
   ngOnInit() {
 
     // Start system
-    this.device.startSystem('NetworkOS', 'admin', 'admin');
+    this.device.startSystem('NetworkOS', 'MasTerik', '');
 
     // On resize change display resolution
     this.device.setResolution(windowResize());

@@ -1,1 +1,24 @@
-<p>processes works!</p>
+<section>
+    <h1>Spuštěné procesy</h1>
+    <div class="items">
+        <div class="item" *ngFor="let app of apps">
+            <div class="row" (click)="expandThis(app)">
+                <div class="info">
+                    <span [textContent]="app"></span>
+                    <span [textContent]="' (' + (getProcess(app)?.getWindows()?.length || 0) + ')'"></span>
+                </div>
+                <div class="actions">
+                    <div class="btn" (click)="getProcess(app)?.kill()">Vypnout</div>
+                </div>
+            </div>
+            <div class="items" style="margin-top: 8px;border-top: 2px solid #303030;padding-top: 8px;" *ngIf="isExpand(app)">
+                <div class="row" *ngFor="let window of getProcess(app)?.getWindows()">
+                    <div class="info">{{ window.getTitle() }}</div>
+                    <div class="actions">
+                        <div class="btn" (click)="window.closeWindow()">Zavřít</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
