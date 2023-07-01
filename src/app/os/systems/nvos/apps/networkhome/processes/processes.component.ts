@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NProcesses } from '../../../Main/Processes';
+import { ApplicationDatabase } from '../NetworkHome';
 
 @Component({
   selector: 'app-processes',
@@ -9,6 +10,10 @@ import { NProcesses } from '../../../Main/Processes';
 export class ProcessesComponent implements OnInit {
   public apps = NProcesses.getRunningProcesses();
   public getProcess = NProcesses.getProcess;
+
+  public getAppIcon(process: string): string {
+    return ApplicationDatabase.filter(_ => _.name === process)[0].icon;
+  }
 
   public tempExpandes: [[string, boolean]] = [[this.apps[0], false]];
   ngOnInit(): void {

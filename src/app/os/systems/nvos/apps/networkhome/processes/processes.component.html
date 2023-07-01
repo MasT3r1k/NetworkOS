@@ -4,8 +4,11 @@
         <div class="item" *ngFor="let app of apps">
             <div class="row" (click)="expandThis(app)">
                 <div class="info">
-                    <span [textContent]="app"></span>
-                    <span [textContent]="' (' + (getProcess(app)?.getWindows()?.length || 0) + ')'"></span>
+                    <div class="title">
+                        <img [src]="getAppIcon(app)" alt="">
+                        <span [textContent]="app"></span>
+                        <span class="windows" [textContent]="' (' + (getProcess(app)?.getWindows()?.length || 0) + ')'"></span>
+                    </div>
                 </div>
                 <div class="actions">
                     <div class="btn" (click)="getProcess(app)?.kill()">Vypnout</div>
