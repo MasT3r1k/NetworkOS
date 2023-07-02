@@ -8,8 +8,3 @@
 .bottom .btn {
     padding: 8px 16px;
 }
-
-
-.active {
-    background-color: rgba(0,0,0,.24)!important;
-}

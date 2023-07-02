@@ -1,7 +1,7 @@
 <section>
     <h1>Spuštěné procesy</h1>
     <div class="items">
-        <div class="item" *ngFor="let app of apps">
+        <div [ngClass]="{item: true, active: isExpand(app)}" *ngFor="let app of apps">
             <div class="row" (click)="expandThis(app)">
                 <div class="info">
                     <div class="title">
@@ -14,7 +14,7 @@
                     <div class="btn" (click)="getProcess(app)?.kill()">Vypnout</div>
                 </div>
             </div>
-            <div class="items" style="margin-top: 8px;border-top: 2px solid #303030;padding-top: 8px;" *ngIf="isExpand(app)">
+            <div class="items expand" *ngIf="isExpand(app)">
                 <div class="row" *ngFor="let window of getProcess(app)?.getWindows()">
                     <div class="info">{{ window.getTitle() }}</div>
                     <div class="actions">

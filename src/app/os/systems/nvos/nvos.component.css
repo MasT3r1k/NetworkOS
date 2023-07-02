@@ -118,7 +118,7 @@
     transform: translate(-50%, -50%);
     top: 50%;
     left: 50%;
-    background-color: #222;
+    background-color: #0d0d0d;
     box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px, rgba(0, 0, 0, 0.24) 0px 3px 8px;
     transition: all .3s;
     color: #aaa;
@@ -151,7 +151,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    background-color: #151515;
+    background-color: #0d0d0d;
     border-top-left-radius: inherit;
     border-top-right-radius: inherit;
     cursor: move;

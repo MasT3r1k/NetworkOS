@@ -6,8 +6,3 @@ section {
     margin: 0px auto;
     width: 375px;
 }
-
-
-input::placeholder {
-    text-align: center;
-}

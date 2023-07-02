@@ -32,7 +32,6 @@ import { WeatherComponent } from './os/systems/nvos/apps/weather/weather.compone
 import { LoaderComponent } from './os/systems/nvos/apps/weather/loader/loader.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NetworkappsComponent } from './os/systems/nvos/apps/networkhome/networkhome.component';
-import { NetworkdatabaseComponent } from './os/systems/nvos/apps/networkdatabase/networkdatabase.component';
 import { ClockComponent } from './os/systems/nvos/apps/clock/clock.component';
 import { SearchComponent } from './os/systems/nvos/apps/networkhome/search/search.component';
 import { InstalledComponent } from './os/systems/nvos/apps/networkhome/installed/installed.component';
@@ -71,7 +70,6 @@ import { UsersComponent as NetworkHomeUsers } from './os/systems/nvos/apps/netwo
     WeatherComponent,
     LoaderComponent,
     NetworkappsComponent,
-    NetworkdatabaseComponent,
     ClockComponent,
     SearchComponent,
     InstalledComponent,

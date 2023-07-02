@@ -70,6 +70,12 @@ i.expander {
     flex-direction: column;
 }
 
+.items.expand {
+    margin-top: 8px;
+    border-top: 1px solid #303030;
+    padding-top: 8px;
+}
+
 .items .item .row {
     display: flex;
     flex-direction: row;
@@ -86,6 +92,10 @@ i.expander {
     background-color: rgba(0,0,0,.04);
     box-shadow: rgba(100, 100, 111, 0.12) 0px 1px 4px 0px;
     cursor: pointer;
+}
+
+.items .item.active {
+    background-color: rgba(0,0,0,.24)!important;
 }
 
 .items .item .info {

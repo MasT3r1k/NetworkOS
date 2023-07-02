@@ -1,7 +1,5 @@
 import { Type } from "@angular/core";
-import { NetworkdatabaseComponent } from "../networkdatabase/networkdatabase.component";
 import { NetworkappsComponent } from "./networkhome.component";
-import { SettingsComponent } from "../settings/settings.component";
 import { SearchComponent } from "./search/search.component";
 import { InstalledComponent } from "./installed/installed.component";
 import { ProcessesComponent } from "./processes/processes.component";
@@ -47,7 +45,6 @@ export function registerProccesses(): void {
     //! REQUIRED APPS !\\
     //! DO NOT TOUCH THIS PART THANKS ;)
     new Application('NetworkHome', NetworkappsComponent, '/assets/nvos/apps/appmanager.png', true);
-    new Application('NetworkDatabse', NetworkdatabaseComponent, '/assets/nvos/apps/datamanager.png', true);
 
     //? Other apps
 }
