@@ -20,6 +20,6 @@
         </div>
     </div>
     <div class="content">
-        <ng-component [ngComponentOutlet]="sidebar?.[active]?.component ?? SettingsComponent"></ng-component>
+        <ng-component [ngComponentOutlet]="(sidebar[active]) ? sidebar[active].component : SettingsComponent"></ng-component>
     </div>
 </div>
