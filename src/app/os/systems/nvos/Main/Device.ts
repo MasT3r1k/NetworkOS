@@ -54,6 +54,10 @@ export namespace NDevice {
             return this.desktopBackground;
         }
 
+        public setMainBackground(img: string): void {
+            this.desktopBackground = img;
+        }
+
         public getLockBackground(): string {
             return this.loginBackground;
         }
