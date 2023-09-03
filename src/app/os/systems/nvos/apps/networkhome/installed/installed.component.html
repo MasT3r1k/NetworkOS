@@ -1,7 +1,7 @@
-<section>
+<section *ngIf="getSection() == 'main'">
     <h1>Nainstalované aplikace</h1>
     <div class="items">
-        <div class="item" *ngFor="let app of apps">
+        <div class="item" *ngFor="let app of apps" (dblclick)="showApp(app)">
             <div class="row">
                 <div class="info">
                     <div class="title">
@@ -10,7 +10,25 @@
                     </div>
                 </div>
                 <div class="actions">
-                    <div class="btn">Zobrazit</div> <!-- PŘESMĚROVAT DO VYHLEDÁVÁNÍ -> APLIKACE --->
+                    <div class="btn" (click)="showApp(app)">Zobrazit</div>   <!-- PŘESMĚROVAT DO VYHLEDÁVÁNÍ -> APLIKACE --->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section *ngIf="getSection() == 'moreInfo' && selectedApp != undefined">
+    <h1>Zobrazení aplikace</h1>
+    <div class="items">
+        <div class="item">
+            <div class="row">
+                <div class="info">
+                    <span>Prohlížíte aplikaci</span>
+                </div>
+                <div class="info">
+                    <div class="title">
+                        <img [src]="getAppIcon(selectedApp.name)" alt="">
+                        <span [textContent]="selectedApp.name"></span>
+                    </div>
                 </div>
             </div>
         </div>

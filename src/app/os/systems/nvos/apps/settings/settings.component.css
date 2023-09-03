@@ -47,7 +47,7 @@ main
     margin-right: 4px;
 }
 
-.sidebar ul li:hover { background-color: hsla(217,7.6%,33.5%,0.16) }
+.sidebar ul li:hover { background-color: hsla(217,7.6%,33.5%,0.24) }
 .sidebar ul li.active { background-color: #2999ed;color: #fff; }
 .sidebar ul li.active:hover { background-color: #1f7bc1;color: #fff; }
 
